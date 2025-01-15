@@ -10,3 +10,4 @@ C:\Developement\ShopProject\shop\shop.domain\obj\Debug\net8.0\shop.domain.dll
 C:\Developement\ShopProject\shop\shop.domain\obj\Debug\net8.0\refint\shop.domain.dll
 C:\Developement\ShopProject\shop\shop.domain\obj\Debug\net8.0\shop.domain.pdb
 C:\Developement\ShopProject\shop\shop.domain\obj\Debug\net8.0\ref\shop.domain.dll
+C:\Developement\ShopProject\shop\shop.domain\obj\Debug\net8.0\shop.domain.sourcelink.json

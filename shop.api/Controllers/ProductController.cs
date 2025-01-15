@@ -1,50 +1,56 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using shop.api.Dto;
 using shop.data;
+using shop.data.DomainServices;
 using shop.domain;
 
 namespace shop.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController(IProductDomainService productService, IMapper mapper) : ControllerBase
     {
-        private readonly ShopContext _context;
-
-        public ProductController(ShopContext context) { _context = context; }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            return Ok(await _context.Products.Select(p => new ProductDto(p)).ToListAsync());
+            var products = await productService.GetAsync();
+            return Ok(mapper.Map<IEnumerable<ProductDto>>(products));
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(Guid id, ProductDto productDto)
+        [HttpPut]
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> PutProduct([FromBody] ProductDto productDto)
         {
-            return Ok(await _context.Products.Where(p => p.ProductId == id).ExecuteUpdateAsync(setters =>
-                    setters.SetProperty(product => product.Name, productDto.Name)
-                    .SetProperty(product => product.InStock, productDto.InStock)
-                    .SetProperty(product => product.Price, productDto.Price)
-                    .SetProperty(product => product.PictureName, productDto.PictureName)));
+
+            var product = mapper.Map<Product>(productDto);
+            int rowsChanged = await productService.UpdateAsync(product);
+
+            if (rowsChanged == 0) return BadRequest("Database error");
+
+            return NoContent();
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(ProductDto productDto)
+        [ProducesResponseType(201)]
+        public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
         {
-            Product product = productDto.ToDomain();
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-
-            return Ok(product.ProductId);
+            var product = await productService.InsertAsync(mapper.Map<Product>(productDto));
+            return Ok(mapper.Map<ProductDto>(product));
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
-            return Ok(await _context.Products.Where(p => p.ProductId == id).ExecuteDeleteAsync());
+            var rowsChanged = await productService.DeleteAsync(id);
+
+            if (rowsChanged == 0) return BadRequest("Entry not found");
+
+            return NoContent();
         }
 
     }

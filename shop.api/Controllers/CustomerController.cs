@@ -1,50 +1,56 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using shop.api.Dto;
 using shop.data;
+using shop.data.DomainServices;
 using shop.domain;
 
 namespace shop.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomerController(ICustomerDomainService customerService, IMapper mapper) : ControllerBase
     {
-        private readonly ShopContext _context;
-
-        public CustomerController(ShopContext context) { _context = context; }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomers()
         {
-            return Ok(await _context.Customers.Select(c => new CustomerDto(c)).ToListAsync());
+            var customers = await customerService.GetAsync();
+            return Ok(mapper.Map<IEnumerable<CustomerDto>>(customers));
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(Guid id, CustomerDto customerDto)
+        [HttpPut]
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> PutCustomer([FromBody] CustomerDto customerDto)
         {
-            return Ok(await _context.Customers.Where(c => c.CustomerId == id).ExecuteUpdateAsync(setters =>
-                    setters.SetProperty(customer => customer.FirstName, customerDto.FirstName)
-                    .SetProperty(customer => customer.LastName, customerDto.LastName)
-                    .SetProperty(customer => customer.Age, customerDto.Age)
-                    .SetProperty(customer => customer.BankDetails, customerDto.BankDetails)));
+
+            var customer = mapper.Map<Customer>(customerDto);
+            int rowsChanged = await customerService.UpdateAsync(customer);
+
+            if (rowsChanged == 0) return BadRequest("Database error");
+
+            return NoContent();
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> PostCustomer(CustomerDto customerDto)
+        [ProducesResponseType(201)]
+        public async Task<ActionResult<CustomerDto>> PostCustomer(CustomerDto customerDto)
         {
-            Customer customer = customerDto.ToDomain();
-            _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
-
-            return Ok(customer.CustomerId);
+            var customer = await customerService.InsertAsync(mapper.Map<Customer>(customerDto));
+            return Ok(mapper.Map<CustomerDto>(customer));
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
         public async Task<IActionResult> DeleteCustomer(Guid id)
         {
-            return Ok(await _context.Customers.Where(c => c.CustomerId == id).ExecuteDeleteAsync());
+            var rowsChanged = await customerService.DeleteAsync(id);
+
+            if (rowsChanged == 0) return BadRequest("Entry not found");
+
+            return NoContent();
         }
 
     }

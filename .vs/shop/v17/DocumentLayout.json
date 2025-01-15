@@ -1,12 +1,71 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Developement\\ShopProject\\shop\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|c:\\developement\\shopproject\\shop\\shop.api\\dto\\transactiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|solutionrelative:shop.api\\dto\\transactiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|c:\\developement\\shopproject\\shop\\shop.api\\dto\\productdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|solutionrelative:shop.api\\dto\\productdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|c:\\developement\\shopproject\\shop\\shop.api\\dto\\customerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|solutionrelative:shop.api\\dto\\customerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProductDto.cs",
+              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.api\\Dto\\ProductDto.cs",
+              "RelativeDocumentMoniker": "shop.api\\Dto\\ProductDto.cs",
+              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.api\\Dto\\ProductDto.cs",
+              "RelativeToolTip": "shop.api\\Dto\\ProductDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T15:10:00.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CustomerDto.cs",
+              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.api\\Dto\\CustomerDto.cs",
+              "RelativeDocumentMoniker": "shop.api\\Dto\\CustomerDto.cs",
+              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.api\\Dto\\CustomerDto.cs",
+              "RelativeToolTip": "shop.api\\Dto\\CustomerDto.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAgwAoAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T15:09:38.182Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TransactionDto.cs",
+              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.api\\Dto\\TransactionDto.cs",
+              "RelativeDocumentMoniker": "shop.api\\Dto\\TransactionDto.cs",
+              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.api\\Dto\\TransactionDto.cs",
+              "RelativeToolTip": "shop.api\\Dto\\TransactionDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T15:09:29.447Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

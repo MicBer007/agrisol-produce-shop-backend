@@ -21,6 +21,28 @@
   },
   {
     "ContainingType": "shop.api.Controllers.CustomerController",
+    "Method": "PutCustomer",
+    "RelativePath": "api/Customer",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerDto",
+        "Type": "shop.api.Dto.CustomerDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.CustomerController",
     "Method": "PostCustomer",
     "RelativePath": "api/Customer",
     "HttpMethod": "POST",
@@ -35,36 +57,15 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Guid",
+        "Type": "shop.api.Dto.CustomerDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
-        "StatusCode": 200
+        "StatusCode": 201
       }
     ]
-  },
-  {
-    "ContainingType": "shop.api.Controllers.CustomerController",
-    "Method": "PutCustomer",
-    "RelativePath": "api/Customer/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "customerDto",
-        "Type": "shop.api.Dto.CustomerDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   },
   {
     "ContainingType": "shop.api.Controllers.CustomerController",
@@ -80,7 +81,13 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      }
+    ]
   },
   {
     "ContainingType": "shop.api.Controllers.ProductController",
@@ -104,6 +111,28 @@
   },
   {
     "ContainingType": "shop.api.Controllers.ProductController",
+    "Method": "PutProduct",
+    "RelativePath": "api/Product",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productDto",
+        "Type": "shop.api.Dto.ProductDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.ProductController",
     "Method": "PostProduct",
     "RelativePath": "api/Product",
     "HttpMethod": "POST",
@@ -118,36 +147,15 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "shop.domain.Product",
+        "Type": "shop.api.Dto.ProductDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
-        "StatusCode": 200
+        "StatusCode": 201
       }
     ]
-  },
-  {
-    "ContainingType": "shop.api.Controllers.ProductController",
-    "Method": "PutProduct",
-    "RelativePath": "api/Product/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "productDto",
-        "Type": "shop.api.Dto.ProductDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   },
   {
     "ContainingType": "shop.api.Controllers.ProductController",
@@ -163,6 +171,12 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      }
+    ]
   }
 ]
