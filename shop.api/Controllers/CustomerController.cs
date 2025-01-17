@@ -21,6 +21,13 @@ namespace shop.api.Controllers
             return Ok(mapper.Map<IEnumerable<CustomerDto>>(customers));
         }
 
+        [HttpGet("Transactions")]
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomersWithTransactions()
+        {
+            var customers = await customerService.GetAsyncWithTransactions();
+            return Ok(mapper.Map<IEnumerable<CustomerDto>>(customers));
+        }
+
         [HttpPut]
         [ProducesResponseType(204)]
         public async Task<IActionResult> PutCustomer([FromBody] CustomerDto customerDto)

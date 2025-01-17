@@ -13,6 +13,7 @@ namespace shop.domain
         public String LastName { get; set; }
         public int Age { get; set; }
         public String BankDetails { get; set; }
+        public List<Transaction> Transactions { get; set; } = new();
     }
 
 }

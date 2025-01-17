@@ -12,8 +12,8 @@ using shop.data;
 namespace shop.data.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20250115130318_primaryKeysNowHaveDefaults")]
-    partial class primaryKeysNowHaveDefaults
+    [Migration("20250116085329_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,8 +29,7 @@ namespace shop.data.Migrations
                 {
                     b.Property<Guid>("CustomerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -74,8 +73,7 @@ namespace shop.data.Migrations
                 {
                     b.Property<Guid>("ProductId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("InStock")
                         .HasColumnType("int");
@@ -93,7 +91,7 @@ namespace shop.data.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("Products");
+                    b.ToTable("product", (string)null);
 
                     b.HasData(
                         new
@@ -168,6 +166,52 @@ namespace shop.data.Migrations
                             PictureName = "maize.jpg",
                             Price = 300m
                         });
+                });
+
+            modelBuilder.Entity("shop.domain.Transaction", b =>
+                {
+                    b.Property<Guid>("TransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TransactionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TransactionValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("TransactionId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("transaction", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            TransactionId = new Guid("10987938-d34c-4809-ab86-9ba1671ad36f"),
+                            CustomerId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"),
+                            TransactionName = "Tomatoes",
+                            TransactionValue = 140m
+                        });
+                });
+
+            modelBuilder.Entity("shop.domain.Transaction", b =>
+                {
+                    b.HasOne("shop.domain.Customer", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("shop.domain.Customer", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

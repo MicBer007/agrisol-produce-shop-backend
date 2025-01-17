@@ -43,6 +43,26 @@ namespace shop.data.Migrations
                     table.PrimaryKey("PK_product", x => x.ProductId);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "transaction",
+                columns: table => new
+                {
+                    TransactionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TransactionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TransactionValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_transaction", x => x.TransactionId);
+                    table.ForeignKey(
+                        name: "FK_transaction_customer_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "customer",
+                        principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "customer",
                 columns: new[] { "CustomerId", "Age", "BankDetails", "FirstName", "LastName" },
@@ -67,16 +87,29 @@ namespace shop.data.Migrations
                     { new Guid("8bf98d1e-78a2-44a5-ba3d-7e0e40079384"), 17, "onions", "onions.jpg", 250m },
                     { new Guid("95cdcf59-5d79-4fed-b5e5-771f9e7a2f30"), 5, "artichokes", "artichokes.jpg", 150m }
                 });
+
+            migrationBuilder.InsertData(
+                table: "transaction",
+                columns: new[] { "TransactionId", "CustomerId", "TransactionName", "TransactionValue" },
+                values: new object[] { new Guid("10987938-d34c-4809-ab86-9ba1671ad36f"), new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"), "Tomatoes", 140m });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_transaction_CustomerId",
+                table: "transaction",
+                column: "CustomerId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "customer");
+                name: "product");
 
             migrationBuilder.DropTable(
-                name: "product");
+                name: "transaction");
+
+            migrationBuilder.DropTable(
+                name: "customer");
         }
     }
 }

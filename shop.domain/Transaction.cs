@@ -10,7 +10,8 @@ namespace shop.domain
     {
         public Guid? TransactionId { get; set; }
         public string TransactionName { get; set; }
-        public decimal PurchaseValue {  get; set; }
+        public decimal TransactionValue { get; set; }
+        public required Guid CustomerId { get; set; }
 
     }
 }

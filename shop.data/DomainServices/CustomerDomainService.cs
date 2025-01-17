@@ -14,6 +14,10 @@ namespace shop.data.DomainServices
         {
             return await DbSet.ToListAsync();
         }
+        public async Task<IEnumerable<Customer>> GetAsyncWithTransactions()
+        {
+            return await DbSet.Include(c => c.Transactions).ToListAsync();
+        }
 
         public async Task<Customer> InsertAsync(Customer customer)
         {
@@ -39,6 +43,7 @@ namespace shop.data.DomainServices
     public interface ICustomerDomainService
     {
         Task<IEnumerable<Customer>> GetAsync();
+        Task<IEnumerable<Customer>> GetAsyncWithTransactions();
         Task<Customer> InsertAsync(Customer customer);
         Task<int> UpdateAsync(Customer customer);
         Task<int> DeleteAsync(Guid id);

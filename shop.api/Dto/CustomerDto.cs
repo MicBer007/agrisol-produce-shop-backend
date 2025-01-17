@@ -9,6 +9,7 @@ namespace shop.api.Dto
         public string LastName { get; set; }
         public int Age { get; set; }
         public string BankDetails { get; set; }
+        public List<TransactionDto> Transactions {  get; set; }
 
     }
 

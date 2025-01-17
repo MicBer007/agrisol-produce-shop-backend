@@ -14,3 +14,5 @@ C:\Developement\ShopProject\shop\shop.data\obj\Debug\net8.0\refint\shop.data.dll
 C:\Developement\ShopProject\shop\shop.data\obj\Debug\net8.0\shop.data.pdb
 C:\Developement\ShopProject\shop\shop.data\obj\Debug\net8.0\ref\shop.data.dll
 C:\Developement\ShopProject\shop\shop.data\obj\Debug\net8.0\shop.data.sourcelink.json
+C:\Developement\ShopProject\shop\shop.data\bin\Debug\net8.0\shop.data.runtimeconfig.json
+C:\Developement\ShopProject\shop\shop.data\obj\Debug\net8.0\shop.data.genruntimeconfig.cache

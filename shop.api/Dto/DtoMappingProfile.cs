@@ -10,6 +10,8 @@ namespace shop.api.Dto
         {
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<Customer, CustomerDto>().ReverseMap();
+            CreateMap<Transaction, TransactionDto>().ReverseMap();
+            CreateMap<ProductSupplier, ProductSupplierDto>().ReverseMap();
         }
     }
 }
