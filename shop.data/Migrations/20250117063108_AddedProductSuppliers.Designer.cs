@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using shop.data;
 
@@ -11,9 +12,11 @@ using shop.data;
 namespace shop.data.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20250117063108_AddedProductSuppliers")]
+    partial class AddedProductSuppliers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace shop.data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ProductProductSupplier", b =>
+                {
+                    b.Property<Guid>("ProductsProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SuppliersProductSupplierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductsProductId", "SuppliersProductSupplierId");
+
+                    b.HasIndex("SuppliersProductSupplierId");
+
+                    b.ToTable("ProductProductSupplier");
+                });
 
             modelBuilder.Entity("shop.domain.Customer", b =>
                 {
@@ -94,90 +112,75 @@ namespace shop.data.Migrations
                         new
                         {
                             ProductId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"),
-                            InStock = 300,
+                            InStock = 15,
                             Name = "tomatoes",
                             PictureName = "tomatoes.jpg",
-                            Price = 15m
+                            Price = 300m
                         },
                         new
                         {
                             ProductId = new Guid("571cffb5-45cf-4130-9fe8-db271cf7769e"),
-                            InStock = 200,
+                            InStock = 10,
                             Name = "potatoes",
                             PictureName = "potatoes.jpg",
-                            Price = 10m
+                            Price = 200m
                         },
                         new
                         {
                             ProductId = new Guid("04a41261-0286-4532-9e78-9d65c77109f2"),
-                            InStock = 70,
+                            InStock = 30,
                             Name = "cabbages",
                             PictureName = "cabbages.jpg",
-                            Price = 30m
+                            Price = 70m
                         },
                         new
                         {
                             ProductId = new Guid("6089c0d4-a700-48fb-bddd-e63e60c6c4fc"),
-                            InStock = 100,
+                            InStock = 10,
                             Name = "leeks",
                             PictureName = "leeks.jpg",
-                            Price = 10m
+                            Price = 100m
                         },
                         new
                         {
                             ProductId = new Guid("57ac950f-8ca5-45d8-90c6-a9136752e844"),
-                            InStock = 200,
+                            InStock = 7,
                             Name = "carrots",
                             PictureName = "carrots.jpg",
-                            Price = 7m
+                            Price = 200m
                         },
                         new
                         {
                             ProductId = new Guid("95cdcf59-5d79-4fed-b5e5-771f9e7a2f30"),
-                            InStock = 150,
+                            InStock = 5,
                             Name = "artichokes",
                             PictureName = "artichokes.jpg",
-                            Price = 5m
+                            Price = 150m
                         },
                         new
                         {
                             ProductId = new Guid("885f5a71-8458-4c41-b437-a2b07153bf5d"),
-                            InStock = 30,
+                            InStock = 15,
                             Name = "beetroots",
                             PictureName = "beetroots.jpg",
-                            Price = 15m
+                            Price = 30m
                         },
                         new
                         {
                             ProductId = new Guid("8bf98d1e-78a2-44a5-ba3d-7e0e40079384"),
-                            InStock = 250,
+                            InStock = 17,
                             Name = "onions",
                             PictureName = "onions.jpg",
-                            Price = 17m
+                            Price = 250m
                         },
                         new
                         {
                             ProductId = new Guid("3e7f899d-867c-4698-b853-6c66c0f413fb"),
-                            InStock = 300,
+                            InStock = 15,
                             Name = "maize",
                             PictureName = "maize.jpg",
-                            Price = 15m
+                            Price = 300m
                         });
-                });
-
-            modelBuilder.Entity("shop.domain.ProductProductSupplier", b =>
-                {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductSupplierId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ProductId", "ProductSupplierId");
-
-                    b.HasIndex("ProductSupplierId");
-
-                    b.ToTable("ProductProductSuppliersJoinTable");
                 });
 
             modelBuilder.Entity("shop.domain.ProductSupplier", b =>
@@ -254,17 +257,17 @@ namespace shop.data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("shop.domain.ProductProductSupplier", b =>
+            modelBuilder.Entity("ProductProductSupplier", b =>
                 {
                     b.HasOne("shop.domain.Product", null)
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductsProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("shop.domain.ProductSupplier", null)
                         .WithMany()
-                        .HasForeignKey("ProductSupplierId")
+                        .HasForeignKey("SuppliersProductSupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

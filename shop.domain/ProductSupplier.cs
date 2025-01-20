@@ -10,7 +10,7 @@ namespace shop.domain
     {
         public Guid? ProductSupplierId { get; set; }
         public string ProductSupplierName { get; set; }
-        public List<Product> Products { get; set; }
+        public List<Product> Products { get; set; } = new();
 
     }
 }

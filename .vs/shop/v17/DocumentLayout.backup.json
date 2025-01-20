@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Developement\\ShopProject\\shop\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|c:\\developement\\shopproject\\shop\\shop.api\\controllers\\customercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|solutionrelative:shop.api\\controllers\\customercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|c:\\developement\\shopproject\\shop\\shop.api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|solutionrelative:shop.api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{206A697D-99B9-4E8C-A0A3-2D4F2492CFDE}|shop.data\\shop.data.csproj|c:\\developement\\shopproject\\shop\\shop.data\\domainservices\\productsupplierdomainservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{206A697D-99B9-4E8C-A0A3-2D4F2492CFDE}|shop.data\\shop.data.csproj|solutionrelative:shop.data\\domainservices\\productsupplierdomainservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|c:\\developement\\shopproject\\shop\\shop.api\\controllers\\productsuppliercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|solutionrelative:shop.api\\controllers\\productsuppliercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{206A697D-99B9-4E8C-A0A3-2D4F2492CFDE}|shop.data\\shop.data.csproj|c:\\developement\\shopproject\\shop\\shop.data\\migrations\\20250120123604_fixedpricestockmixuponproducts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{206A697D-99B9-4E8C-A0A3-2D4F2492CFDE}|shop.data\\shop.data.csproj|solutionrelative:shop.data\\migrations\\20250120123604_fixedpricestockmixuponproducts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +26,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CustomerController.cs",
-              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.api\\Controllers\\CustomerController.cs",
-              "RelativeDocumentMoniker": "shop.api\\Controllers\\CustomerController.cs",
-              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.api\\Controllers\\CustomerController.cs",
-              "RelativeToolTip": "shop.api\\Controllers\\CustomerController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAowCQAAABKAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "ProductSupplierDomainService.cs",
+              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.data\\DomainServices\\ProductSupplierDomainService.cs",
+              "RelativeDocumentMoniker": "shop.data\\DomainServices\\ProductSupplierDomainService.cs",
+              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.data\\DomainServices\\ProductSupplierDomainService.cs",
+              "RelativeToolTip": "shop.data\\DomainServices\\ProductSupplierDomainService.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAUwDAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-16T14:48:17.707Z",
+              "WhenOpened": "2025-01-20T12:38:00.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "20250120123604_FixedPriceStockMixupOnProducts.cs",
+              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.data\\Migrations\\20250120123604_FixedPriceStockMixupOnProducts.cs",
+              "RelativeDocumentMoniker": "shop.data\\Migrations\\20250120123604_FixedPriceStockMixupOnProducts.cs",
+              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.data\\Migrations\\20250120123604_FixedPriceStockMixupOnProducts.cs",
+              "RelativeToolTip": "shop.data\\Migrations\\20250120123604_FixedPriceStockMixupOnProducts.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T12:36:12.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductSupplierController.cs",
+              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.api\\Controllers\\ProductSupplierController.cs",
+              "RelativeDocumentMoniker": "shop.api\\Controllers\\ProductSupplierController.cs",
+              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.api\\Controllers\\ProductSupplierController.cs",
+              "RelativeToolTip": "shop.api\\Controllers\\ProductSupplierController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T12:32:18.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.api\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "shop.api\\Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.api\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "shop.api\\Controllers\\ProductController.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAcwEwAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T12:32:12.111Z",
               "EditorCaption": ""
             }
           ]

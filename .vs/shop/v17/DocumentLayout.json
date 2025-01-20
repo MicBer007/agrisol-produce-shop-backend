@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Developement\\ShopProject\\shop\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{206A697D-99B9-4E8C-A0A3-2D4F2492CFDE}|shop.data\\shop.data.csproj|c:\\developement\\shopproject\\shop\\shop.data\\dataconfig\\customerconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{206A697D-99B9-4E8C-A0A3-2D4F2492CFDE}|shop.data\\shop.data.csproj|solutionrelative:shop.data\\dataconfig\\customerconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{206A697D-99B9-4E8C-A0A3-2D4F2492CFDE}|shop.data\\shop.data.csproj|c:\\developement\\shopproject\\shop\\shop.data\\domainservices\\productdomainservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{206A697D-99B9-4E8C-A0A3-2D4F2492CFDE}|shop.data\\shop.data.csproj|solutionrelative:shop.data\\domainservices\\productdomainservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|c:\\developement\\shopproject\\shop\\shop.api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD1854BD-C399-4D9F-A5A7-47A8001EA3CC}|shop.api\\shop.api.csproj|solutionrelative:shop.api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CustomerConfig.cs",
-              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.data\\DataConfig\\CustomerConfig.cs",
-              "RelativeDocumentMoniker": "shop.data\\DataConfig\\CustomerConfig.cs",
-              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.data\\DataConfig\\CustomerConfig.cs",
-              "RelativeToolTip": "shop.data\\DataConfig\\CustomerConfig.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAApAAAAAAAAAA==",
+              "Title": "ProductDomainService.cs",
+              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.data\\DomainServices\\ProductDomainService.cs",
+              "RelativeDocumentMoniker": "shop.data\\DomainServices\\ProductDomainService.cs",
+              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.data\\DomainServices\\ProductDomainService.cs",
+              "RelativeToolTip": "shop.data\\DomainServices\\ProductDomainService.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAEwDEAAABoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-17T05:46:56.982Z",
+              "WhenOpened": "2025-01-20T13:34:56.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Developement\\ShopProject\\shop\\shop.api\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "shop.api\\Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Developement\\ShopProject\\shop\\shop.api\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "shop.api\\Controllers\\ProductController.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAcwEMAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T12:32:12.111Z",
               "EditorCaption": ""
             }
           ]

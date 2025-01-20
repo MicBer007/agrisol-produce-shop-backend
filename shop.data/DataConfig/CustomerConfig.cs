@@ -9,7 +9,7 @@ using shop.domain;
 
 namespace shop.data.DataConfig
 {
-    public class CustomerConfig : IEntityTypeConfiguration<Customer>
+    public class CustomerConfig: IEntityTypeConfiguration<Customer>
     {
         public void Configure(EntityTypeBuilder<Customer> cBuilder)
         {

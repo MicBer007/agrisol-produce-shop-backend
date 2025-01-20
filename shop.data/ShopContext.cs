@@ -17,6 +17,8 @@ namespace shop.data
         public DbSet<Product> Products { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<ProductSupplier> ProductSuppliers { get; set; }
+        public DbSet<ProductProductSupplier> ProductProductSuppliersJoinTable { get; set; }
 
         public ShopContext() { }
         public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
@@ -24,6 +26,7 @@ namespace shop.data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShopContext).Assembly);
+            modelBuilder.Entity<Product>().HasMany(p => p.Suppliers).WithMany(pS => pS.Products).UsingEntity<ProductProductSupplier>();
         }
 
     }

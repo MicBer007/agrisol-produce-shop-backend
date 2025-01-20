@@ -11,7 +11,7 @@ namespace shop.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController(ICustomerDomainService customerService, IMapper mapper) : ControllerBase
+    public class CustomerController(ICustomerDomainService customerService, IMapper mapper): ControllerBase
     {
 
         [HttpGet]
@@ -32,7 +32,6 @@ namespace shop.api.Controllers
         [ProducesResponseType(204)]
         public async Task<IActionResult> PutCustomer([FromBody] CustomerDto customerDto)
         {
-
             var customer = mapper.Map<Customer>(customerDto);
             int rowsChanged = await customerService.UpdateAsync(customer);
 
