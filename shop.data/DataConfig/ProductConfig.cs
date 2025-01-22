@@ -28,7 +28,6 @@ namespace shop.data.DataConfig
             pBuilder.Property(p => p.ProductId).ValueGeneratedOnAdd();
             pBuilder.Property(p => p.Price).HasColumnType("decimal(18,2)");
             pBuilder.HasData(Products);
-            pBuilder.ToTable("product");
         }
     }
 }

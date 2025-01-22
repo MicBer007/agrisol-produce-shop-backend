@@ -19,10 +19,10 @@ namespace shop.api.Controllers
             return Ok(mapper.Map<IEnumerable<ProductSupplierDto>>(suppliers));
         }
 
-        [HttpGet("Products")]
+        [HttpGet("WithRelated")]
         public async Task<ActionResult<IEnumerable<ProductSupplierDto>>> GetSuppliersWithProducts()
         {
-            var suppliersWithProducts = await productSupplierService.GetAsyncWithProducts();
+            var suppliersWithProducts = await productSupplierService.GetAsyncWithRelatedData();
             return Ok(mapper.Map<IEnumerable<ProductSupplierDto>>(suppliersWithProducts));
         }
 
@@ -81,5 +81,6 @@ namespace shop.api.Controllers
 
             return NoContent();
         }
+
     }
 }

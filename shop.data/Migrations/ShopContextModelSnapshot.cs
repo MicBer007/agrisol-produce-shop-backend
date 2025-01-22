@@ -45,7 +45,7 @@ namespace shop.data.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("customer", (string)null);
+                    b.ToTable("Customers");
 
                     b.HasData(
                         new
@@ -63,6 +63,68 @@ namespace shop.data.Migrations
                             BankDetails = "Absa:475693",
                             FirstName = "Mauro",
                             LastName = "Lavista"
+                        });
+                });
+
+            modelBuilder.Entity("shop.domain.Order", b =>
+                {
+                    b.Property<Guid>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TimeCarted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("TimeDelivered")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("TimePayed")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderId = new Guid("7213d1a4-0da4-4d88-82eb-379cf1f4b03c"),
+                            CustomerId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"),
+                            OrderStatus = "InCart",
+                            TimeCarted = new DateTime(2024, 4, 12, 5, 27, 19, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            OrderId = new Guid("46e4fa2d-96bc-4c80-8ece-1a20cd7402b4"),
+                            CustomerId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"),
+                            OrderStatus = "Payed",
+                            TimeCarted = new DateTime(2023, 5, 2, 23, 59, 23, 0, DateTimeKind.Unspecified),
+                            TimePayed = new DateTime(2024, 2, 28, 17, 42, 49, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            OrderId = new Guid("ed5287a9-7240-4485-9f5f-392cd52f6ea7"),
+                            CustomerId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"),
+                            OrderStatus = "Delivered",
+                            TimeCarted = new DateTime(2022, 6, 26, 19, 1, 34, 0, DateTimeKind.Unspecified),
+                            TimeDelivered = new DateTime(2024, 8, 25, 16, 48, 42, 0, DateTimeKind.Unspecified),
+                            TimePayed = new DateTime(2024, 5, 25, 21, 51, 25, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            OrderId = new Guid("22ed9b30-1d3c-4b96-ab3a-56f40608f2be"),
+                            CustomerId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"),
+                            OrderStatus = "InCart",
+                            TimeCarted = new DateTime(2024, 11, 30, 23, 38, 55, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -88,7 +150,7 @@ namespace shop.data.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("product", (string)null);
+                    b.ToTable("Products");
 
                     b.HasData(
                         new
@@ -165,6 +227,24 @@ namespace shop.data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("shop.domain.ProductOrder", b =>
+                {
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductOrderJoinTable");
+                });
+
             modelBuilder.Entity("shop.domain.ProductProductSupplier", b =>
                 {
                     b.Property<Guid>("ProductId")
@@ -172,6 +252,11 @@ namespace shop.data.Migrations
 
                     b.Property<Guid>("ProductSupplierId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("MomentCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("ProductId", "ProductSupplierId");
 
@@ -192,7 +277,7 @@ namespace shop.data.Migrations
 
                     b.HasKey("ProductSupplierId");
 
-                    b.ToTable("productSuppliers", (string)null);
+                    b.ToTable("ProductSuppliers");
 
                     b.HasData(
                         new
@@ -222,36 +307,28 @@ namespace shop.data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("shop.domain.Transaction", b =>
+            modelBuilder.Entity("shop.domain.Order", b =>
                 {
-                    b.Property<Guid>("TransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.HasOne("shop.domain.Customer", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
+            modelBuilder.Entity("shop.domain.ProductOrder", b =>
+                {
+                    b.HasOne("shop.domain.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("TransactionName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TransactionValue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("TransactionId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("transaction", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            TransactionId = new Guid("10987938-d34c-4809-ab86-9ba1671ad36f"),
-                            CustomerId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"),
-                            TransactionName = "Tomatoes",
-                            TransactionValue = 140m
-                        });
+                    b.HasOne("shop.domain.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("shop.domain.ProductProductSupplier", b =>
@@ -269,18 +346,9 @@ namespace shop.data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("shop.domain.Transaction", b =>
-                {
-                    b.HasOne("shop.domain.Customer", null)
-                        .WithMany("Transactions")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("shop.domain.Customer", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

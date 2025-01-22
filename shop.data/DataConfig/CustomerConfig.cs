@@ -19,7 +19,6 @@ namespace shop.data.DataConfig
             };
             cBuilder.Property(c => c.CustomerId).ValueGeneratedOnAdd();
             cBuilder.HasData(Customers);
-            cBuilder.ToTable("customer");
         }
     }
 }

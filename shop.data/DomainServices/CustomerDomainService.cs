@@ -14,13 +14,24 @@ namespace shop.data.DomainServices
         {
             return await DbSet.ToListAsync();
         }
-        public async Task<IEnumerable<Customer>> GetAsyncWithTransactions()
+        public async Task<IEnumerable<Customer>> GetAsyncWithRelatedData()
         {
-            return await DbSet.Include(c => c.Transactions).ToListAsync();
+            return (await DbSet.Include(c => c.Orders).ThenInclude(o => o.Products).ThenInclude(p => p.Suppliers).ToListAsync()).Select(RemoveCircularReferencesFromRelatedData);
+        }
+
+        public Customer RemoveCircularReferencesFromRelatedData(Customer customer)
+        {
+            customer.Orders.ForEach(o => o.Products.ForEach(p =>
+            {
+                p.Orders.Clear();
+                p.Suppliers.ForEach(pS => pS.Products.Clear());
+            }));
+            return customer;
         }
 
         public async Task<Customer> InsertAsync(Customer customer)
         {
+            if (customer.Orders != null && customer.Orders.Count > 0) throw new ArgumentOutOfRangeException("You cannot initialize a new Order when creating a customer! Rather include the customerId on an http call to create the order.");
             DbSet.Add(customer);
             await Db.SaveChangesAsync();
             return customer;
@@ -28,6 +39,7 @@ namespace shop.data.DomainServices
 
         public async Task<int> UpdateAsync(Customer customer)
         {
+            if (customer.Orders != null && customer.Orders.Count > 0) throw new ArgumentOutOfRangeException("You cannot initialize a new Order when updating a customer! Rather include the customerId on an http call to create the order.");
             DbSet.Update(customer);
             return await Db.SaveChangesAsync();
         }
@@ -43,7 +55,7 @@ namespace shop.data.DomainServices
     public interface ICustomerDomainService
     {
         Task<IEnumerable<Customer>> GetAsync();
-        Task<IEnumerable<Customer>> GetAsyncWithTransactions();
+        Task<IEnumerable<Customer>> GetAsyncWithRelatedData();
         Task<Customer> InsertAsync(Customer customer);
         Task<int> UpdateAsync(Customer customer);
         Task<int> DeleteAsync(Guid id);

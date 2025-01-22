@@ -21,10 +21,10 @@ namespace shop.api.Controllers
             return Ok(mapper.Map<IEnumerable<ProductDto>>(products));
         }
 
-        [HttpGet("Suppliers")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsWithSuppliers()
+        [HttpGet("WithRelated")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsWithRelatedData()
         {
-            var productsWithSuppliers = await productService.GetAsyncWithSuppliers();
+            var productsWithSuppliers = await productService.GetAsyncWithRelatedData();
             return Ok(mapper.Map<IEnumerable<ProductDto>>(productsWithSuppliers));
         }
 
@@ -63,7 +63,7 @@ namespace shop.api.Controllers
 
         [HttpPut("LinkSupplier")]
         [ProducesResponseType(204)]
-        public async Task<IActionResult> CreateLinkToProduct(Guid productId, Guid supplierId)
+        public async Task<IActionResult> CreateLinkToProductSupplier(Guid productId, Guid supplierId)
         {
             int rowsChanged = await productService.AddProductSupplierLinkAsync(productId, supplierId);
 
@@ -74,10 +74,33 @@ namespace shop.api.Controllers
 
         [HttpPut("UnlinkSupplier")]
         [ProducesResponseType(204)]
-        public async Task<IActionResult> RemoveLinkToProduct(Guid productId, Guid supplierId)
+        public async Task<IActionResult> RemoveLinkToProductSupplier(Guid productId, Guid supplierId)
         {
 
             int rowsChanged = await productService.RemoveProductSupplierLinkAsync(productId, supplierId);
+
+            if (rowsChanged == 0) return BadRequest("Database error");
+
+            return NoContent();
+        }
+
+        [HttpPut("LinkOrder")]
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> CreateLinkToOrder(Guid productId, Guid orderId, int amount)
+        {
+            int rowsChanged = await productService.AddOrderLinkAsync(productId, orderId, amount);
+
+            if (rowsChanged == 0) return BadRequest("Database error");
+
+            return NoContent();
+        }
+
+        [HttpPut("UnlinkOrder")]
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> RemoveLinkToProduct(Guid productId, Guid orderId)
+        {
+
+            int rowsChanged = await productService.RemoveOrderLinkAsync(productId, orderId);
 
             if (rowsChanged == 0) return BadRequest("Database error");
 

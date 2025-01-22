@@ -11,7 +11,7 @@ namespace shop.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController(ICustomerDomainService customerService, IMapper mapper): ControllerBase
+    public class CustomerController(ICustomerDomainService customerService, IProductOrderJoinDomainService productOrderJoinService, IMapper mapper): ControllerBase
     {
 
         [HttpGet]
@@ -21,11 +21,22 @@ namespace shop.api.Controllers
             return Ok(mapper.Map<IEnumerable<CustomerDto>>(customers));
         }
 
-        [HttpGet("Transactions")]
-        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomersWithTransactions()
+        [HttpGet("WithRelated")]
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomersRelatedData()
         {
-            var customers = await customerService.GetAsyncWithTransactions();
-            return Ok(mapper.Map<IEnumerable<CustomerDto>>(customers));
+            var customers = await customerService.GetAsyncWithRelatedData();
+            var customerDtos = mapper.Map<IEnumerable<CustomerDto>>(customers);
+            foreach (CustomerDto customer in customerDtos)
+            {
+                foreach (OrderDto order in customer.Orders)
+                {
+                    foreach (ProductDto product in order.Products)
+                    {
+                        order.Amounts.Add(await productOrderJoinService.GetAmountForProductInOrder((Guid)order.OrderId, (Guid)product.ProductId));
+                    }
+                }
+            }
+            return Ok(customerDtos);
         }
 
         [HttpPut]

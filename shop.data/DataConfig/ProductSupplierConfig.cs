@@ -22,7 +22,6 @@ namespace shop.data.DataConfig
             };
             builder.Property(pS => pS.ProductSupplierId).ValueGeneratedOnAdd();
             builder.HasData(ProductSuppliers);
-            builder.ToTable("productSuppliers");
         }
     }
 }

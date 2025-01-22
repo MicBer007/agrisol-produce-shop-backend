@@ -14,6 +14,7 @@ namespace shop.domain
         public int InStock { get; set; }
         public string PictureName { get; set; }
         public List<ProductSupplier> Suppliers { get; set; } = new();
+        public List<Order> Orders { get; set; } = new();
     }
 
 }

@@ -91,8 +91,8 @@
   },
   {
     "ContainingType": "shop.api.Controllers.CustomerController",
-    "Method": "GetCustomersWithTransactions",
-    "RelativePath": "api/Customer/Transactions",
+    "Method": "GetCustomersRelatedData",
+    "RelativePath": "api/Customer/WithRelated",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -100,6 +100,175 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[shop.api.Dto.CustomerDto, shop.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.OrderController",
+    "Method": "GetOrders",
+    "RelativePath": "api/Order",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[shop.domain.Order, shop.domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.OrderController",
+    "Method": "PostOrder",
+    "RelativePath": "api/Order",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderDto",
+        "Type": "shop.api.Dto.OrderDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "shop.api.Dto.OrderDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 201
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.OrderController",
+    "Method": "PutOrder",
+    "RelativePath": "api/Order",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderDto",
+        "Type": "shop.api.Dto.OrderDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.OrderController",
+    "Method": "DeleteOrder",
+    "RelativePath": "api/Order/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.OrderController",
+    "Method": "CreateLinkToProduct",
+    "RelativePath": "api/Order/Linkproduct",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "productId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "amount",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.OrderController",
+    "Method": "RemoveLinkToProduct",
+    "RelativePath": "api/Order/UnlinkProduct",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "productId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.OrderController",
+    "Method": "GetOrdersWithRelatedData",
+    "RelativePath": "api/Order/WithRelated",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[shop.domain.Order, shop.domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -201,7 +370,39 @@
   },
   {
     "ContainingType": "shop.api.Controllers.ProductController",
-    "Method": "CreateLinkToProduct",
+    "Method": "CreateLinkToOrder",
+    "RelativePath": "api/Product/LinkOrder",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "orderId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "amount",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.ProductController",
+    "Method": "CreateLinkToProductSupplier",
     "RelativePath": "api/Product/LinkSupplier",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -228,27 +429,34 @@
   },
   {
     "ContainingType": "shop.api.Controllers.ProductController",
-    "Method": "GetProductsWithSuppliers",
-    "RelativePath": "api/Product/Suppliers",
-    "HttpMethod": "GET",
+    "Method": "RemoveLinkToProduct",
+    "RelativePath": "api/Product/UnlinkOrder",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "orderId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[shop.api.Dto.ProductDto, shop.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
       }
     ]
   },
   {
     "ContainingType": "shop.api.Controllers.ProductController",
-    "Method": "RemoveLinkToProduct",
+    "Method": "RemoveLinkToProductSupplier",
     "RelativePath": "api/Product/UnlinkSupplier",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -270,6 +478,88 @@
         "Type": "System.Void",
         "MediaTypes": [],
         "StatusCode": 204
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.ProductController",
+    "Method": "GetProductsWithRelatedData",
+    "RelativePath": "api/Product/WithRelated",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[shop.api.Dto.ProductDto, shop.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.ProductOrderJoinController",
+    "Method": "GetAmountOfProduct",
+    "RelativePath": "api/ProductOrderJoin/ProductAmount",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "orderId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "shop.api.Controllers.ProductProductSupplierJoinController",
+    "Method": "GetMomentCreated",
+    "RelativePath": "api/ProductProductSupplierJoin/MomentCreated",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "productSupplierId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.DateTime",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
       }
     ]
   },
@@ -392,26 +682,6 @@
   },
   {
     "ContainingType": "shop.api.Controllers.ProductSupplierController",
-    "Method": "GetSuppliersWithProducts",
-    "RelativePath": "api/ProductSupplier/Products",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[shop.api.Dto.ProductSupplierDto, shop.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "shop.api.Controllers.ProductSupplierController",
     "Method": "RemoveLinkToProduct",
     "RelativePath": "api/ProductSupplier/UnlinkProduct",
     "HttpMethod": "PUT",
@@ -438,92 +708,22 @@
     ]
   },
   {
-    "ContainingType": "shop.api.Controllers.TransactionController",
-    "Method": "GetTransactions",
-    "RelativePath": "api/Transaction",
+    "ContainingType": "shop.api.Controllers.ProductSupplierController",
+    "Method": "GetSuppliersWithProducts",
+    "RelativePath": "api/ProductSupplier/WithRelated",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[shop.api.Dto.TransactionDto, shop.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[shop.api.Dto.ProductSupplierDto, shop.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "shop.api.Controllers.TransactionController",
-    "Method": "PutTransaction",
-    "RelativePath": "api/Transaction",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "transactionDto",
-        "Type": "shop.api.Dto.TransactionDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 204
-      }
-    ]
-  },
-  {
-    "ContainingType": "shop.api.Controllers.TransactionController",
-    "Method": "PostTransaction",
-    "RelativePath": "api/Transaction",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "transactionDto",
-        "Type": "shop.api.Dto.TransactionDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "shop.api.Dto.TransactionDto",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "shop.api.Controllers.TransactionController",
-    "Method": "DeleteTransaction",
-    "RelativePath": "api/Transaction/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 204
       }
     ]
   }

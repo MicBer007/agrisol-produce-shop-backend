@@ -12,13 +12,12 @@ namespace shop.data
     public class ShopContext : DbContext
     {
 
-        //Please try to implement support for EFPowerTools to see the nice diagrams
-
         public DbSet<Product> Products { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
         public DbSet<ProductSupplier> ProductSuppliers { get; set; }
         public DbSet<ProductProductSupplier> ProductProductSuppliersJoinTable { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<ProductOrder> ProductOrderJoinTable { get; set; }
 
         public ShopContext() { }
         public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
@@ -26,7 +25,9 @@ namespace shop.data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShopContext).Assembly);
+            modelBuilder.Entity<ProductProductSupplier>().Property(pPS => pPS.MomentCreated).HasDefaultValueSql("CURRENT_TIMESTAMP");
             modelBuilder.Entity<Product>().HasMany(p => p.Suppliers).WithMany(pS => pS.Products).UsingEntity<ProductProductSupplier>();
+            modelBuilder.Entity<Order>().HasMany(o => o.Products).WithMany(p => p.Orders).UsingEntity<ProductOrder>();
         }
 
     }

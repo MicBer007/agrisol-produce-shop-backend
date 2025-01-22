@@ -10,6 +10,7 @@ namespace shop.api.Dto
         public int InStock { get; set; }
         public string PictureName { get; set; }
         public List<ProductSupplierDto> Suppliers { get; set; } = new();
+        public List<OrderDto> Orders { get; set; } = new();
 
     }
 

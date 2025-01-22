@@ -40,14 +40,17 @@ namespace shop.data.DomainServices
             return await DbSet.ToListAsync();
         }
 
-        public async Task<IEnumerable<ProductSupplier>> GetAsyncWithProducts()
+        public async Task<IEnumerable<ProductSupplier>> GetAsyncWithRelatedData()
         {
-            return (await DbSet.Include(pS => pS.Products).ToListAsync()).Select(pS => ClearSupplierProductSuppliersList(pS));
+            return (await DbSet.Include(pS => pS.Products).ThenInclude(p => p.Orders).ToListAsync()).Select(pS => RemoveCircularReferencesFromRelatedData(pS));
         }
 
-        public ProductSupplier ClearSupplierProductSuppliersList(ProductSupplier pS)
+        public ProductSupplier RemoveCircularReferencesFromRelatedData(ProductSupplier pS)
         {
-            pS.Products.ForEach(p => p.Suppliers.Clear());
+            pS.Products.ForEach(p => {
+                p.Suppliers.Clear();
+                p.Orders.ForEach(o => o.Products.Clear());
+            });
             return pS;
         }
 
@@ -82,17 +85,23 @@ namespace shop.data.DomainServices
             return await Db.ProductProductSuppliersJoinTable.Where(pPS => pPS.ProductSupplierId == productSupplierId && pPS.ProductId == linkedProductId).ExecuteDeleteAsync();
         }
 
+        public async Task<DateTime> GetMomentCreated(Guid productSupplierId, Guid linkedProductId)
+        {
+            return (await Db.ProductProductSuppliersJoinTable.Where(pPS => pPS.ProductId == linkedProductId && pPS.ProductSupplierId == productSupplierId).FirstOrDefaultAsync()).MomentCreated;
+        }
+
     }
 
     public interface IProductSupplierDomainService
     {
         Task<IEnumerable<ProductSupplier>> GetAsync();
-        Task<IEnumerable<ProductSupplier>> GetAsyncWithProducts();
+        Task<IEnumerable<ProductSupplier>> GetAsyncWithRelatedData();
         Task<ProductSupplier> InsertAsync(ProductSupplier productSupplier);
         Task<int> UpdateAsync(ProductSupplier productSupplier);
         Task<int> DeleteAsync(Guid id);
         Task<int> AddProductLinkAsync(Guid productSupplierId, Guid linkedProductId);
         Task<int> RemoveProductLinkAsync(Guid productSupplierId, Guid linkedProductId);
+        Task<DateTime> GetMomentCreated(Guid productSupplierId, Guid linkedProductId);
     }
 
 }

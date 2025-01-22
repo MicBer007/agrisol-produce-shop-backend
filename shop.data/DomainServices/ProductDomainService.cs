@@ -16,14 +16,15 @@ namespace shop.data.DomainServices
             return await DbSet.ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetAsyncWithSuppliers()
+        public async Task<IEnumerable<Product>> GetAsyncWithRelatedData()
         {
-            return (await DbSet.Include(p => p.Suppliers).ToListAsync()).Select(p => ClearProductSupplierProductsList(p));
+            return (await DbSet.Include(p => p.Suppliers).Include(p => p.Orders).ToListAsync()).Select(RemoveCircularReferencesFromRelatedData);
         }
 
-        public Product ClearProductSupplierProductsList(Product p)
+        public Product RemoveCircularReferencesFromRelatedData(Product p)
         {
             p.Suppliers.ForEach(pS => pS.Products.Clear());
+            p.Orders.ForEach(o => o.Products.Clear());
             return p;
         }
 
@@ -57,17 +58,30 @@ namespace shop.data.DomainServices
         {
             return await Db.ProductProductSuppliersJoinTable.Where(pPS => pPS.ProductSupplierId == linkedProductSupplierId && pPS.ProductId == productId).ExecuteDeleteAsync();
         }
+
+        public async Task<int> AddOrderLinkAsync(Guid productId, Guid linkedOrderId, int amount)
+        {
+            await Db.ProductOrderJoinTable.AddAsync(new ProductOrder() { ProductId = productId, OrderId = linkedOrderId, Amount = amount});
+            return await Db.SaveChangesAsync();
+        }
+
+        public async Task<int> RemoveOrderLinkAsync(Guid productId, Guid linkedOrderId)
+        {
+            return await Db.ProductOrderJoinTable.Where(pO => pO.ProductId == productId && pO.OrderId == linkedOrderId).ExecuteDeleteAsync();
+        }
     }
 
     public interface IProductDomainService
     {
         Task<IEnumerable<Product>> GetAsync();
-        Task<IEnumerable<Product>> GetAsyncWithSuppliers();
+        Task<IEnumerable<Product>> GetAsyncWithRelatedData();
         Task<Product> InsertAsync(Product product);
         Task<int> UpdateAsync(Product product);
         Task<int> DeleteAsync(Guid id);
         Task<int> AddProductSupplierLinkAsync(Guid productId, Guid linkedProductSupplierId);
         Task<int> RemoveProductSupplierLinkAsync(Guid productId, Guid linkedProductSupplierId);
+        Task<int> AddOrderLinkAsync(Guid productId, Guid linkedOrderId, int amount);
+        Task<int> RemoveOrderLinkAsync(Guid productId, Guid linkedOrderId);
     }
 
 }
