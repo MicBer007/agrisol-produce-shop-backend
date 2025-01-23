@@ -19,7 +19,7 @@ namespace shop.api
             services.AddScoped<IProductDomainService, ProductDomainService>();
             services.AddScoped<ICustomerDomainService, CustomerDomainService>();
             services.AddScoped<IProductSupplierDomainService, ProductSupplierDomainService>();
-            services.AddScoped<IProductOrderJoinDomainService, ProductOrderJoinDomainService>();
+            services.AddScoped<IProductInOrderDomainService, ProductInOrderDomainService>();
             services.AddScoped<IProductProductSupplierJoinDomainService, ProductProductSupplierJoinDomainService>();
         }
     }

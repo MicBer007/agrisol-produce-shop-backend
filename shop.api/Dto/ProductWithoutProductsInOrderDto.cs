@@ -1,17 +1,11 @@
-﻿using shop.domain;
-
-namespace shop.api.Dto
+﻿namespace shop.api.Dto
 {
-    public class ProductDto
+    public class ProductWithoutProductsInOrderDto
     {
         public Guid? ProductId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int InStock { get; set; }
         public string PictureName { get; set; }
-        public List<ProductSupplierDto> Suppliers { get; set; } = new();
-        public List<ProductInOrderDto> ProductInOrders { get; set; } = new();
-
     }
-
 }

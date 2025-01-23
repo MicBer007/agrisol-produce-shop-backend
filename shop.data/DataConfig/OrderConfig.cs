@@ -24,6 +24,7 @@ namespace shop.data.DataConfig
             oBuilder.Property(o => o.OrderId).ValueGeneratedOnAdd();
             oBuilder.Property(o => o.OrderStatus).HasConversion(new EnumToStringConverter<OrderStatus>());
             oBuilder.HasData(orders);
+
         }
     }
 }

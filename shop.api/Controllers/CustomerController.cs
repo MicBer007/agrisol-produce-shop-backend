@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using shop.api.Dto;
-using shop.data;
 using shop.data.DomainServices;
 using shop.domain;
 
@@ -11,7 +8,7 @@ namespace shop.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController(ICustomerDomainService customerService, IProductOrderJoinDomainService productOrderJoinService, IMapper mapper): ControllerBase
+    public class CustomerController(ICustomerDomainService customerService, IProductInOrderDomainService productOrderJoinService, IMapper mapper): ControllerBase
     {
 
         [HttpGet]
@@ -21,11 +18,12 @@ namespace shop.api.Controllers
             return Ok(mapper.Map<IEnumerable<CustomerDto>>(customers));
         }
 
-        [HttpGet("WithRelated")]
-        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomersRelatedData()
+        [HttpGet("WithOrders/{id}")]
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomersRelatedData(Guid id)
         {
-            var customers = await customerService.GetAsyncWithRelatedData();
-            var customerDtos = mapper.Map<IEnumerable<CustomerDto>>(customers);
+            var customer = await customerService.GetAsyncWithOrdersById(id);
+            var customerDto = mapper.Map<CustomerDto>(customer);
+            /*
             foreach (CustomerDto customer in customerDtos)
             {
                 foreach (OrderDto order in customer.Orders)
@@ -36,7 +34,8 @@ namespace shop.api.Controllers
                     }
                 }
             }
-            return Ok(customerDtos);
+            */
+            return Ok(customerDto);
         }
 
         [HttpPut]

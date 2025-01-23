@@ -9,8 +9,8 @@ namespace shop.api.Dto
         public DateTime? TimeCarted { get; set; }
         public DateTime? TimePayed { get; set; }
         public DateTime? TimeDelivered { get; set; }
-        public Guid CustomerId { get; set; }
-        public List<int> Amounts { get; set; } = [];
-        public List<ProductDto> Products { get; set; } = [];
+     //   public Guid CustomerId { get; set; }
+       // public List<int> Amounts { get; set; } = [];
+        public List<ProductInOrderDto> ProductsInOrder { get; set; } = new List<ProductInOrderDto>();
     }
 }

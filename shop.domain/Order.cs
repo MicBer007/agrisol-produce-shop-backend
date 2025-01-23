@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace shop.domain
+﻿namespace shop.domain
 {
     public class Order
     {
@@ -14,6 +8,6 @@ namespace shop.domain
         public DateTime? TimePayed { get; set; }
         public DateTime? TimeDelivered { get; set; }
         public Guid CustomerId { get; set; }
-        public List<Product> Products { get; set; } = new();
+        public List<ProductInOrder> ProductsInOrder { get; set; } = new List<ProductInOrder>();
     }
 }

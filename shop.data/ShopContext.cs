@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using shop.domain;
 
 namespace shop.data
@@ -17,7 +11,7 @@ namespace shop.data
         public DbSet<ProductSupplier> ProductSuppliers { get; set; }
         public DbSet<ProductProductSupplier> ProductProductSuppliersJoinTable { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<ProductOrder> ProductOrderJoinTable { get; set; }
+        public DbSet<ProductInOrder> ProductOrderJoinTable { get; set; }
 
         public ShopContext() { }
         public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
@@ -27,7 +21,7 @@ namespace shop.data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShopContext).Assembly);
             modelBuilder.Entity<ProductProductSupplier>().Property(pPS => pPS.MomentCreated).HasDefaultValueSql("CURRENT_TIMESTAMP");
             modelBuilder.Entity<Product>().HasMany(p => p.Suppliers).WithMany(pS => pS.Products).UsingEntity<ProductProductSupplier>();
-            modelBuilder.Entity<Order>().HasMany(o => o.Products).WithMany(p => p.Orders).UsingEntity<ProductOrder>();
+        //    modelBuilder.Entity<Order>().HasMany(o => o.ProductsInOrder).WithMany(p => p.).UsingEntity<ProductInOrder>();
         }
 
     }

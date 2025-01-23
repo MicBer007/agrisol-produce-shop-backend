@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using shop.domain;
 
 namespace shop.data.DomainServices
@@ -18,17 +13,19 @@ namespace shop.data.DomainServices
 
         public async Task<IEnumerable<Order>> GetAsyncWithRelatedData()
         {
-            return (await DbSet.Include(o => o.Products).ThenInclude(p => p.Suppliers).ToListAsync()).Select(ClearRelatedDataCircularReferencing);
+            return (await DbSet.Include(o => o.ProductsInOrder).ToListAsync());
         }
 
+        /*
         public Order ClearRelatedDataCircularReferencing(Order o)
         {
-            o.Products.ForEach(p => {
-                p.Orders.Clear();
+            o.ProductInOrders.ForEach(p => {
+                p.Transactions.Clear();
                 p.Suppliers.ForEach(pS => pS.Products.Clear());
             });
             return o;
         }
+        */
 
         public async Task<Order> InsertAsync(Order order)
         {
@@ -52,7 +49,7 @@ namespace shop.data.DomainServices
 
         public async Task<int> AddProductLinkAsync(Guid orderId, Guid linkedProductId, int amount)
         {
-            await Db.ProductOrderJoinTable.AddAsync(new ProductOrder() { OrderId = orderId, ProductId = linkedProductId, Amount = amount });
+            await Db.ProductOrderJoinTable.AddAsync(new ProductInOrder() { OrderId = orderId, ProductId = linkedProductId, Quantity = amount });
             return await Db.SaveChangesAsync();
         }
 

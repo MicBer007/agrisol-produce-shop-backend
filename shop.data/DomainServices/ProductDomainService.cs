@@ -18,16 +18,17 @@ namespace shop.data.DomainServices
 
         public async Task<IEnumerable<Product>> GetAsyncWithRelatedData()
         {
-            return (await DbSet.Include(p => p.Suppliers).Include(p => p.Orders).ToListAsync()).Select(RemoveCircularReferencesFromRelatedData);
+            return (await DbSet.Include(p => p.Suppliers).Include(p => p.ProductInOrders).ToListAsync());//.Select(RemoveCircularReferencesFromRelatedData);
         }
 
+        /*
         public Product RemoveCircularReferencesFromRelatedData(Product p)
         {
             p.Suppliers.ForEach(pS => pS.Products.Clear());
-            p.Orders.ForEach(o => o.Products.Clear());
+            p.ProductInOrders.ForEach(o => o.Products.Clear());
             return p;
         }
-
+        */
         public async Task<Product> InsertAsync(Product product)
         {
             DbSet.Add(product);
@@ -61,7 +62,7 @@ namespace shop.data.DomainServices
 
         public async Task<int> AddOrderLinkAsync(Guid productId, Guid linkedOrderId, int amount)
         {
-            await Db.ProductOrderJoinTable.AddAsync(new ProductOrder() { ProductId = productId, OrderId = linkedOrderId, Amount = amount});
+            await Db.ProductOrderJoinTable.AddAsync(new ProductInOrder() { ProductId = productId, OrderId = linkedOrderId, Quantity = amount});
             return await Db.SaveChangesAsync();
         }
 

@@ -14,20 +14,24 @@ namespace shop.data.DomainServices
         {
             return await DbSet.ToListAsync();
         }
-        public async Task<IEnumerable<Customer>> GetAsyncWithRelatedData()
+        public async Task<Customer> GetAsyncWithOrdersById(Guid id)
         {
-            return (await DbSet.Include(c => c.Orders).ThenInclude(o => o.Products).ThenInclude(p => p.Suppliers).ToListAsync()).Select(RemoveCircularReferencesFromRelatedData);
+            return (await DbSet.Include(c => c.Orders)
+                .ThenInclude(o => o.ProductsInOrder)
+                .ThenInclude(p => p.Product)
+                .FirstOrDefaultAsync(c => c.CustomerId == id));//.Select(RemoveCircularReferencesFromRelatedData);
         }
-
+        /*
         public Customer RemoveCircularReferencesFromRelatedData(Customer customer)
         {
-            customer.Orders.ForEach(o => o.Products.ForEach(p =>
+            customer.Orders.ForEach(o => o.ProductInOrders.ForEach(p =>
             {
-                p.Orders.Clear();
+                p.Transactions.Clear();
                 p.Suppliers.ForEach(pS => pS.Products.Clear());
             }));
             return customer;
         }
+        */
 
         public async Task<Customer> InsertAsync(Customer customer)
         {
@@ -55,7 +59,7 @@ namespace shop.data.DomainServices
     public interface ICustomerDomainService
     {
         Task<IEnumerable<Customer>> GetAsync();
-        Task<IEnumerable<Customer>> GetAsyncWithRelatedData();
+        Task<Customer> GetAsyncWithOrdersById(Guid id);
         Task<Customer> InsertAsync(Customer customer);
         Task<int> UpdateAsync(Customer customer);
         Task<int> DeleteAsync(Guid id);

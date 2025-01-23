@@ -42,17 +42,19 @@ namespace shop.data.DomainServices
 
         public async Task<IEnumerable<ProductSupplier>> GetAsyncWithRelatedData()
         {
-            return (await DbSet.Include(pS => pS.Products).ThenInclude(p => p.Orders).ToListAsync()).Select(pS => RemoveCircularReferencesFromRelatedData(pS));
+            return (await DbSet.Include(pS => pS.Products).ThenInclude(p => p.ProductInOrders).ToListAsync());//.Select(pS => RemoveCircularReferencesFromRelatedData(pS));
         }
 
+        /*
         public ProductSupplier RemoveCircularReferencesFromRelatedData(ProductSupplier pS)
         {
             pS.Products.ForEach(p => {
                 p.Suppliers.Clear();
-                p.Orders.ForEach(o => o.Products.Clear());
+                p.ProductInOrders.ForEach(o => o.Products.Clear());
             });
             return pS;
         }
+        */
 
         public async Task<ProductSupplier> InsertAsync(ProductSupplier productSupplier)
         {
