@@ -7,7 +7,7 @@ namespace shop.data.DomainServices
     {
         public async Task<DateTime> GetMomentJoinCreated(Guid productId, Guid productSupplierId)
         {
-            return (await DbSet.Where(pPS => pPS.ProductId == productId && pPS.ProductSupplierId == productSupplierId).FirstOrDefaultAsync()).MomentCreated;
+            return (await DbSet.Where(pPS => pPS.ProductId == productId && pPS.SupplierId == productSupplierId).FirstOrDefaultAsync()).MomentCreated;
         }
     }
 

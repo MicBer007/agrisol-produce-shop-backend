@@ -72,18 +72,18 @@ namespace shop.data.DomainServices
 
         public async Task<int> AddProductLinkAsync(Guid productSupplierId, Guid linkedProductId)
         {
-            await Db.ProductSupplierJoins.AddAsync(new ProductSupplierJ() { ProductId = linkedProductId, ProductSupplierId = productSupplierId });
+            await Db.ProductSupplierJoins.AddAsync(new ProductSupplierJ() { ProductId = linkedProductId, SupplierId = productSupplierId });
             return await Db.SaveChangesAsync();
         }
 
         public async Task<int> RemoveProductLinkAsync(Guid productSupplierId, Guid linkedProductId)
         {
-            return await Db.ProductSupplierJoins.Where(pPS => pPS.ProductSupplierId == productSupplierId && pPS.ProductId == linkedProductId).ExecuteDeleteAsync();
+            return await Db.ProductSupplierJoins.Where(pPS => pPS.SupplierId == productSupplierId && pPS.ProductId == linkedProductId).ExecuteDeleteAsync();
         }
 
         public async Task<DateTime> GetMomentCreated(Guid productSupplierId, Guid linkedProductId)
         {
-            return (await Db.ProductSupplierJoins.Where(pPS => pPS.ProductId == linkedProductId && pPS.ProductSupplierId == productSupplierId).FirstOrDefaultAsync()).MomentCreated;
+            return (await Db.ProductSupplierJoins.Where(pPS => pPS.ProductId == linkedProductId && pPS.SupplierId == productSupplierId).FirstOrDefaultAsync()).MomentCreated;
         }
 
     }

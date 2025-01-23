@@ -45,13 +45,13 @@ namespace shop.data.DomainServices
 
         public async Task<int> AddProductSupplierLinkAsync(Guid productId, Guid linkedProductSupplierId)
         {
-            await Db.ProductSupplierJoins.AddAsync(new ProductSupplierJ() { ProductId = productId, ProductSupplierId = linkedProductSupplierId });
+            await Db.ProductSupplierJoins.AddAsync(new ProductSupplierJ() { ProductId = productId, SupplierId = linkedProductSupplierId });
             return await Db.SaveChangesAsync();
         }
 
         public async Task<int> RemoveProductSupplierLinkAsync(Guid productId, Guid linkedProductSupplierId)
         {
-            return await Db.ProductSupplierJoins.Where(pPS => pPS.ProductSupplierId == linkedProductSupplierId && pPS.ProductId == productId).ExecuteDeleteAsync();
+            return await Db.ProductSupplierJoins.Where(pPS => pPS.SupplierId == linkedProductSupplierId && pPS.ProductId == productId).ExecuteDeleteAsync();
         }
 
         public async Task<int> AddOrderLinkAsync(Guid productId, Guid linkedOrderId, int amount)

@@ -23,11 +23,11 @@ namespace shop.data.DomainServices
 
         private Customer RemoveCircularReferencesFromRelatedData(Customer customer)
         {
-            customer.Orders.ForEach(order => order.Products.ForEach(product =>
-            {
-                product.Orders.Clear();
-                product.Suppliers.ForEach(supplier => supplier.Products.Clear());
-            }));
+            //customer.Orders.ForEach(order => order.Products.ForEach(product =>
+            //{
+            //    product.Orders.Clear();
+            //    product.Suppliers.ForEach(supplier => supplier.Products.Clear());
+            //}));
             return customer;
         }
 
