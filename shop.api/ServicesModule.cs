@@ -15,12 +15,7 @@ namespace shop.api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IOrderDomainService, OrderDomainService>();
-            services.AddScoped<IProductDomainService, ProductDomainService>();
             services.AddScoped<ICustomerDomainService, CustomerDomainService>();
-            services.AddScoped<IProductSupplierDomainService, SupplierDomainService>();
-            services.AddScoped<IProductOrderJoinDomainService, ProductOrderJoinDomainService>();
-            services.AddScoped<IProductProductSupplierJoinDomainService, ProductProductSupplierJoinDomainService>();
         }
     }
 

@@ -1,13 +1,12 @@
-﻿namespace shop.domain
+﻿namespace shop.api.Dto
 {
-    public class Order
+    public class OrderWithoutOrderProductsDto
     {
         public Guid? OrderId { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public string OrderStatus { get; set; }
         public DateTime? TimeCarted { get; set; }
         public DateTime? TimePayed { get; set; }
         public DateTime? TimeDelivered { get; set; }
         public Guid CustomerId { get; set; }
-        public List<OrderProduct> OrderProducts { get; set; } = [];
     }
 }

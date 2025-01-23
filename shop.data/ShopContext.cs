@@ -11,7 +11,7 @@ namespace shop.data
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<ProductSupplierJ> ProductSupplierJoins { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<ProductOrderJ> ProductOrderJoins { get; set; }
+        public DbSet<OrderProduct> ProductOrderJoins { get; set; }
 
         public ShopContext() { }
         public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
@@ -21,7 +21,6 @@ namespace shop.data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShopContext).Assembly);
             modelBuilder.Entity<ProductSupplierJ>().Property(pPS => pPS.MomentCreated).HasDefaultValueSql("CURRENT_TIMESTAMP");
             modelBuilder.Entity<Product>().HasMany(p => p.Suppliers).WithMany(pS => pS.Products).UsingEntity<ProductSupplierJ>();
-            modelBuilder.Entity<Order>().HasMany(o => o.Products).WithMany(p => p.Orders).UsingEntity<ProductOrderJ>();
         }
 
     }

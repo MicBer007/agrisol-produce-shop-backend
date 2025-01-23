@@ -6,62 +6,51 @@ namespace shop.data.DomainServices
     public class CustomerDomainService(ShopContext _dbContext) : DomainServiceBase<Customer>(_dbContext), ICustomerDomainService
     {
 
-        public async Task<IEnumerable<Customer>> GetAsync()
+        public async Task<IEnumerable<Customer>> GetCustomersAsync()
         {
             return await DbSet.ToListAsync();
         }
 
-        public async Task<IEnumerable<Customer>> GetCustomersWithRelatedData()
+        public async Task<Customer> GetCustomerByIdAsync(Guid customerId)
         {
-            return (await DbSet.Include(c => c.Orders).ThenInclude(o => o.Products).ThenInclude(p => p.Suppliers).ToListAsync()).Select(RemoveCircularReferencesFromRelatedData);
+            return await DbSet.FindAsync(customerId);
         }
 
-        //public async Task<Customer> GetCustomerWithOrderDataAsync(Guid customerId)
-        //{
-        //    return (await DbSet.Where(c => c.CustomerId == customerId).Include(c => c.Orders).ThenInclude(o => o.Products).FirstOrDefaultAsync());
-        //}
-
-        private Customer RemoveCircularReferencesFromRelatedData(Customer customer)
+        public async Task<Customer> GetCustomerByIdWithOrdersAsync(Guid CustomerId)
         {
-            //customer.Orders.ForEach(order => order.Products.ForEach(product =>
-            //{
-            //    product.Orders.Clear();
-            //    product.Suppliers.ForEach(supplier => supplier.Products.Clear());
-            //}));
-            return customer;
+            return await DbSet.Include(c => c.Orders).ThenInclude(o => o.OrderProducts).ThenInclude(oP => oP.Product).Include(oP => oP.Orders).FirstOrDefaultAsync(c => c.CustomerId == CustomerId);
         }
 
-        public async Task<Customer> InsertAsync(Customer customer)
+        public async Task<Customer> AddCustomerAsync(Customer customer)
         {
-            if (customer.Orders != null && customer.Orders.Count > 0) throw new ArgumentOutOfRangeException("You cannot initialize a new Order when creating a customer! Rather include the customerId on an http call to create the order.");
+            if (customer.Orders != null || customer.Orders.Count > 0) throw new ArgumentException("Orders should be empty when adding a new customer!");
             DbSet.Add(customer);
             await Db.SaveChangesAsync();
             return customer;
         }
 
-        public async Task<int> UpdateAsync(Customer customer)
+        public async Task<int> DeleteCustomerAsync(Guid customerId)
         {
-            if (customer.Orders != null && customer.Orders.Count > 0) throw new ArgumentOutOfRangeException("You cannot initialize a new Order when updating a customer! Rather include the customerId on an http call to create the order.");
-            DbSet.Update(customer);
+            var customer = await DbSet.FindAsync(customerId);
+            if (customer != null) DbSet.Remove(customer);
             return await Db.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteAsync(Guid id)
+        public async Task<int> UpdateCustomerAsync(Customer customer)
         {
-            var customer = await DbSet.FindAsync(id);
-            if (customer != null) DbSet.Remove(customer); //<--- shouldn't we use ExecuteDeleteAsync?
+            DbSet.Update(customer);
             return await Db.SaveChangesAsync();
         }
     }
 
     public interface ICustomerDomainService
     {
-        Task<IEnumerable<Customer>> GetAsync();
-        //Task<Customer> GetCustomerWithOrderDataAsync(Guid customerId);
-        Task<IEnumerable<Customer>> GetCustomersWithRelatedData();
-        Task<Customer> InsertAsync(Customer customer);
-        Task<int> UpdateAsync(Customer customer);
-        Task<int> DeleteAsync(Guid id);
+        Task<IEnumerable<Customer>> GetCustomersAsync();
+        Task<Customer> GetCustomerByIdAsync(Guid CustomerId);
+        Task<Customer> GetCustomerByIdWithOrdersAsync(Guid CustomerId);
+        Task<Customer> AddCustomerAsync(Customer customer);
+        Task<int> DeleteCustomerAsync(Guid CustomerId);
+        Task<int> UpdateCustomerAsync(Customer customer);
     }
 
 }

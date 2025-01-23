@@ -8,7 +8,6 @@
         public DateTime? TimePayed { get; set; }
         public DateTime? TimeDelivered { get; set; }
         public Guid CustomerId { get; set; }
-        public List<int> Amounts { get; set; } = [];
-        public List<ProductDto> Products { get; set; } = [];
+        public List<OrderProductDto> OrderProducts { get; set; } = [];
     }
 }

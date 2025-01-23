@@ -7,8 +7,8 @@
         public decimal Price { get; set; }
         public int InStock { get; set; }
         public string PictureName { get; set; }
-        public List<SupplierDto> Suppliers { get; set; } = new();
-        public List<OrderDto> Orders { get; set; } = new();
+        public List<SupplierDto> Suppliers { get; set; } = [];
+        public List<OrderProductDto> OrderProducts { get; set; } = [];
 
     }
 
