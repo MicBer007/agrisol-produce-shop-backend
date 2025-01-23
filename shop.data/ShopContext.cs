@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using shop.domain;
 
 namespace shop.data
@@ -14,10 +8,10 @@ namespace shop.data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<ProductSupplier> ProductSuppliers { get; set; }
-        public DbSet<ProductProductSupplier> ProductProductSuppliersJoinTable { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<ProductSupplierJ> ProductSupplierJoins { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<ProductOrder> ProductOrderJoinTable { get; set; }
+        public DbSet<ProductOrderJ> ProductOrderJoins { get; set; }
 
         public ShopContext() { }
         public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
@@ -25,9 +19,9 @@ namespace shop.data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShopContext).Assembly);
-            modelBuilder.Entity<ProductProductSupplier>().Property(pPS => pPS.MomentCreated).HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<Product>().HasMany(p => p.Suppliers).WithMany(pS => pS.Products).UsingEntity<ProductProductSupplier>();
-            modelBuilder.Entity<Order>().HasMany(o => o.Products).WithMany(p => p.Orders).UsingEntity<ProductOrder>();
+            modelBuilder.Entity<ProductSupplierJ>().Property(pPS => pPS.MomentCreated).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            modelBuilder.Entity<Product>().HasMany(p => p.Suppliers).WithMany(pS => pS.Products).UsingEntity<ProductSupplierJ>();
+            modelBuilder.Entity<Order>().HasMany(o => o.Products).WithMany(p => p.Orders).UsingEntity<ProductOrderJ>();
         }
 
     }

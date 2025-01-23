@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using shop.domain;
 
 namespace shop.data.DomainServices
@@ -21,11 +16,11 @@ namespace shop.data.DomainServices
             return (await DbSet.Include(p => p.Suppliers).Include(p => p.Orders).ToListAsync()).Select(RemoveCircularReferencesFromRelatedData);
         }
 
-        public Product RemoveCircularReferencesFromRelatedData(Product p)
+        private Product RemoveCircularReferencesFromRelatedData(Product product)
         {
-            p.Suppliers.ForEach(pS => pS.Products.Clear());
-            p.Orders.ForEach(o => o.Products.Clear());
-            return p;
+            product.Orders.ForEach(order => order.Products.Clear());
+            product.Suppliers.ForEach(supplier => supplier.Products.Clear());
+            return product;
         }
 
         public async Task<Product> InsertAsync(Product product)
@@ -50,24 +45,24 @@ namespace shop.data.DomainServices
 
         public async Task<int> AddProductSupplierLinkAsync(Guid productId, Guid linkedProductSupplierId)
         {
-            await Db.ProductProductSuppliersJoinTable.AddAsync(new ProductProductSupplier() { ProductId = productId, ProductSupplierId = linkedProductSupplierId });
+            await Db.ProductSupplierJoins.AddAsync(new ProductSupplierJ() { ProductId = productId, ProductSupplierId = linkedProductSupplierId });
             return await Db.SaveChangesAsync();
         }
 
         public async Task<int> RemoveProductSupplierLinkAsync(Guid productId, Guid linkedProductSupplierId)
         {
-            return await Db.ProductProductSuppliersJoinTable.Where(pPS => pPS.ProductSupplierId == linkedProductSupplierId && pPS.ProductId == productId).ExecuteDeleteAsync();
+            return await Db.ProductSupplierJoins.Where(pPS => pPS.ProductSupplierId == linkedProductSupplierId && pPS.ProductId == productId).ExecuteDeleteAsync();
         }
 
         public async Task<int> AddOrderLinkAsync(Guid productId, Guid linkedOrderId, int amount)
         {
-            await Db.ProductOrderJoinTable.AddAsync(new ProductOrder() { ProductId = productId, OrderId = linkedOrderId, Amount = amount});
+            await Db.ProductOrderJoins.AddAsync(new ProductOrderJ() { ProductId = productId, OrderId = linkedOrderId, Amount = amount});
             return await Db.SaveChangesAsync();
         }
 
         public async Task<int> RemoveOrderLinkAsync(Guid productId, Guid linkedOrderId)
         {
-            return await Db.ProductOrderJoinTable.Where(pO => pO.ProductId == productId && pO.OrderId == linkedOrderId).ExecuteDeleteAsync();
+            return await Db.ProductOrderJoins.Where(pO => pO.ProductId == productId && pO.OrderId == linkedOrderId).ExecuteDeleteAsync();
         }
     }
 

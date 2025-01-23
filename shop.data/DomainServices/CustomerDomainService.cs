@@ -1,30 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using shop.domain;
 
 namespace shop.data.DomainServices
 {
     public class CustomerDomainService(ShopContext _dbContext) : DomainServiceBase<Customer>(_dbContext), ICustomerDomainService
     {
+
         public async Task<IEnumerable<Customer>> GetAsync()
         {
             return await DbSet.ToListAsync();
         }
-        public async Task<IEnumerable<Customer>> GetAsyncWithRelatedData()
+
+        public async Task<IEnumerable<Customer>> GetCustomersWithRelatedData()
         {
             return (await DbSet.Include(c => c.Orders).ThenInclude(o => o.Products).ThenInclude(p => p.Suppliers).ToListAsync()).Select(RemoveCircularReferencesFromRelatedData);
         }
 
-        public Customer RemoveCircularReferencesFromRelatedData(Customer customer)
+        //public async Task<Customer> GetCustomerWithOrderDataAsync(Guid customerId)
+        //{
+        //    return (await DbSet.Where(c => c.CustomerId == customerId).Include(c => c.Orders).ThenInclude(o => o.Products).FirstOrDefaultAsync());
+        //}
+
+        private Customer RemoveCircularReferencesFromRelatedData(Customer customer)
         {
-            customer.Orders.ForEach(o => o.Products.ForEach(p =>
+            customer.Orders.ForEach(order => order.Products.ForEach(product =>
             {
-                p.Orders.Clear();
-                p.Suppliers.ForEach(pS => pS.Products.Clear());
+                product.Orders.Clear();
+                product.Suppliers.ForEach(supplier => supplier.Products.Clear());
             }));
             return customer;
         }
@@ -55,7 +57,8 @@ namespace shop.data.DomainServices
     public interface ICustomerDomainService
     {
         Task<IEnumerable<Customer>> GetAsync();
-        Task<IEnumerable<Customer>> GetAsyncWithRelatedData();
+        //Task<Customer> GetCustomerWithOrderDataAsync(Guid customerId);
+        Task<IEnumerable<Customer>> GetCustomersWithRelatedData();
         Task<Customer> InsertAsync(Customer customer);
         Task<int> UpdateAsync(Customer customer);
         Task<int> DeleteAsync(Guid id);

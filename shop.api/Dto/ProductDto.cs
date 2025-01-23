@@ -1,6 +1,4 @@
-﻿using shop.domain;
-
-namespace shop.api.Dto
+﻿namespace shop.api.Dto
 {
     public class ProductDto
     {
@@ -9,7 +7,7 @@ namespace shop.api.Dto
         public decimal Price { get; set; }
         public int InStock { get; set; }
         public string PictureName { get; set; }
-        public List<ProductSupplierDto> Suppliers { get; set; } = new();
+        public List<SupplierDto> Suppliers { get; set; } = new();
         public List<OrderDto> Orders { get; set; } = new();
 
     }

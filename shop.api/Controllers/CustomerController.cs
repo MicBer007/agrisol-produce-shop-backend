@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using shop.api.Dto;
-using shop.data;
 using shop.data.DomainServices;
 using shop.domain;
 
@@ -11,7 +8,7 @@ namespace shop.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController(ICustomerDomainService customerService, IProductOrderJoinDomainService productOrderJoinService, IMapper mapper): ControllerBase
+    public class CustomerController(ICustomerDomainService customerService, IMapper mapper): ControllerBase
     {
 
         [HttpGet]
@@ -22,22 +19,20 @@ namespace shop.api.Controllers
         }
 
         [HttpGet("WithRelated")]
-        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomersRelatedData()
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomersWithRelatedData()
         {
-            var customers = await customerService.GetAsyncWithRelatedData();
+            var customers = await customerService.GetCustomersWithRelatedData();
             var customerDtos = mapper.Map<IEnumerable<CustomerDto>>(customers);
-            foreach (CustomerDto customer in customerDtos)
-            {
-                foreach (OrderDto order in customer.Orders)
-                {
-                    foreach (ProductDto product in order.Products)
-                    {
-                        order.Amounts.Add(await productOrderJoinService.GetAmountForProductInOrder((Guid)order.OrderId, (Guid)product.ProductId));
-                    }
-                }
-            }
             return Ok(customerDtos);
         }
+
+        //[HttpGet("Orders")]
+        //public async Task<ActionResult<CustomerDto>> GetCustomerWithOrderData(Guid customerId)
+        //{
+        //    var customer = await customerService.GetCustomerWithOrderDataAsync(customerId);
+        //    var customerDto = mapper.Map<CustomerDto>(customer);
+        //    return Ok(customerDto);
+        //}
 
         [HttpPut]
         [ProducesResponseType(204)]

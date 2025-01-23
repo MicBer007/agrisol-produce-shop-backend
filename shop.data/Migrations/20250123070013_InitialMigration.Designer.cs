@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using shop.data;
 
@@ -11,9 +12,11 @@ using shop.data;
 namespace shop.data.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20250123070013_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace shop.data.Migrations
                         {
                             CustomerId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"),
                             Age = 54,
-                            BankDetails = "Capitec: 5492875",
+                            BankDetails = "Capitec:5492875",
                             FirstName = "Harald",
                             LastName = "Berndt"
                         },
@@ -60,7 +63,7 @@ namespace shop.data.Migrations
                         {
                             CustomerId = new Guid("95cdcf59-5d79-4fed-b5e5-771f9e7a2f30"),
                             Age = 32,
-                            BankDetails = "Absa: 475693",
+                            BankDetails = "Absa:475693",
                             FirstName = "Mauro",
                             LastName = "Lavista"
                         });

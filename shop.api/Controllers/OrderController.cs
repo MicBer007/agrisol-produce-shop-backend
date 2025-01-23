@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
 using shop.api.Dto;
 using shop.data.DomainServices;
 using shop.domain;
@@ -10,7 +8,7 @@ namespace shop.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController(IOrderDomainService orderService, IProductOrderJoinDomainService productOrderJoinService, IMapper mapper): ControllerBase
+    public class OrderController(IOrderDomainService orderService, IMapper mapper): ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
@@ -24,13 +22,6 @@ namespace shop.api.Controllers
         {
             var orders = await orderService.GetAsyncWithRelatedData();
             var orderDtos = mapper.Map<IEnumerable<OrderDto>>(orders);
-            foreach (OrderDto order in orderDtos)
-            {
-                foreach (ProductDto product in order.Products)
-                {
-                    order.Amounts.Add(await productOrderJoinService.GetAmountForProductInOrder((Guid) order.OrderId, (Guid) product.ProductId));
-                }
-            }
             return Ok(orderDtos);
         }
 

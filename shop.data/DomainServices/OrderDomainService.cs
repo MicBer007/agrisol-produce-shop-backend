@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using shop.domain;
 
 namespace shop.data.DomainServices
@@ -18,16 +13,17 @@ namespace shop.data.DomainServices
 
         public async Task<IEnumerable<Order>> GetAsyncWithRelatedData()
         {
-            return (await DbSet.Include(o => o.Products).ThenInclude(p => p.Suppliers).ToListAsync()).Select(ClearRelatedDataCircularReferencing);
+            return (await DbSet.Include(o => o.Products).ThenInclude(p => p.Suppliers).ToListAsync()).Select(RemoveCircularReferencesFromRelatedData);
         }
 
-        public Order ClearRelatedDataCircularReferencing(Order o)
+        private Order RemoveCircularReferencesFromRelatedData(Order order)
         {
-            o.Products.ForEach(p => {
+            order.Products.ForEach(p =>
+            {
                 p.Orders.Clear();
-                p.Suppliers.ForEach(pS => pS.Products.Clear());
+                p.Suppliers.ForEach(supplier => supplier.Products.Clear());
             });
-            return o;
+            return order;
         }
 
         public async Task<Order> InsertAsync(Order order)
@@ -52,13 +48,13 @@ namespace shop.data.DomainServices
 
         public async Task<int> AddProductLinkAsync(Guid orderId, Guid linkedProductId, int amount)
         {
-            await Db.ProductOrderJoinTable.AddAsync(new ProductOrder() { OrderId = orderId, ProductId = linkedProductId, Amount = amount });
+            await Db.ProductOrderJoins.AddAsync(new ProductOrderJ() { OrderId = orderId, ProductId = linkedProductId, Amount = amount });
             return await Db.SaveChangesAsync();
         }
 
         public async Task<int> RemoveProductLinkAsync(Guid orderId, Guid linkedProductId)
         {
-            return await Db.ProductOrderJoinTable.Where(pO => pO.OrderId == orderId && pO.ProductId == linkedProductId).ExecuteDeleteAsync();
+            return await Db.ProductOrderJoins.Where(pO => pO.OrderId == orderId && pO.ProductId == linkedProductId).ExecuteDeleteAsync();
         }
     }
 

@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using shop.api.Dto;
-using shop.data;
 using shop.data.DomainServices;
 using shop.domain;
 

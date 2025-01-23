@@ -1,6 +1,4 @@
-﻿using shop.domain;
-
-namespace shop.api.Dto
+﻿namespace shop.api.Dto
 {
     public class CustomerDto
     {
