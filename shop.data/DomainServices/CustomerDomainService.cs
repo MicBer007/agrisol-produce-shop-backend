@@ -23,7 +23,7 @@ namespace shop.data.DomainServices
 
         public async Task<Customer> AddCustomerAsync(Customer customer)
         {
-            if (customer.Orders != null || customer.Orders.Count > 0) throw new ArgumentException("Orders should be empty when adding a new customer!");
+            if (customer.Orders != null && customer.Orders.Count > 0) throw new ArgumentException("Orders should be empty when adding a new customer!");
             DbSet.Add(customer);
             await Db.SaveChangesAsync();
             return customer;
@@ -38,8 +38,14 @@ namespace shop.data.DomainServices
 
         public async Task<int> UpdateCustomerAsync(Customer customer)
         {
+            if (customer.Orders != null && customer.Orders.Count > 0) throw new ArgumentException("Orders should be empty when updating a customer!");
             DbSet.Update(customer);
             return await Db.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Customer>> GetCustomersWithAllData()
+        {
+            return await DbSet.Include(c => c.Orders).ThenInclude(o => o.OrderProducts).ThenInclude(oP => oP.Product).ThenInclude(p => p.ProductSupplierJoins).ThenInclude(pS => pS.Supplier).ToListAsync();
         }
     }
 
@@ -48,6 +54,7 @@ namespace shop.data.DomainServices
         Task<IEnumerable<Customer>> GetCustomersAsync();
         Task<Customer> GetCustomerByIdAsync(Guid CustomerId);
         Task<Customer> GetCustomerByIdWithOrdersAsync(Guid CustomerId);
+        Task<IEnumerable<Customer>> GetCustomersWithAllData();
         Task<Customer> AddCustomerAsync(Customer customer);
         Task<int> DeleteCustomerAsync(Guid CustomerId);
         Task<int> UpdateCustomerAsync(Customer customer);

@@ -19,7 +19,6 @@ namespace shop.data.DataConfig
                 new Product {ProductId = new Guid("8BF98D1E-78A2-44A5-BA3D-7E0E40079384"), Name = "onions", Price = 17, InStock = 250, PictureName = "onions.jpg"},
                 new Product {ProductId = new Guid("3E7F899D-867C-4698-B853-6C66C0F413FB"), Name = "maize", Price = 15, InStock = 300, PictureName = "maize.jpg"}
             };
-            pBuilder.Property(p => p.ProductId).ValueGeneratedOnAdd();
             pBuilder.Property(p => p.Price).HasColumnType("decimal(18,2)");
             pBuilder.HasData(Products);
         }

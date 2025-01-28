@@ -15,7 +15,6 @@ namespace shop.data.DataConfig
                 new Supplier {SupplierId = new Guid("eca7177e-b329-4b1b-89cc-1f6ed6445fbe"), SupplierName = "Jean"},
                 new Supplier {SupplierId = new Guid("1ebd7129-aef3-4f96-8df9-4c035d214f27"), SupplierName = "Johan"}
             };
-            builder.Property(pS => pS.SupplierId).ValueGeneratedOnAdd();
             builder.HasData(ProductSuppliers);
         }
     }

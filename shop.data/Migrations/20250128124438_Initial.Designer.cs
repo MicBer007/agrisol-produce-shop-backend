@@ -12,8 +12,8 @@ using shop.data;
 namespace shop.data.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20250123123919_CreatedExplicitRelationshipMappingBetweenProductAndOrder")]
-    partial class CreatedExplicitRelationshipMappingBetweenProductAndOrder
+    [Migration("20250128124438_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

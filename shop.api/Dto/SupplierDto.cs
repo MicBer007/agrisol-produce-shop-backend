@@ -4,7 +4,7 @@
     {
         public Guid? SupplierId { get; set; }
         public string SupplierName { get; set; }
-        public List<ProductDto> Products { get; set; } = new();
+        public List<ProductSupplierJoinDto> ProductSupplierJoins { get; set; } = [];
 
     }
 }

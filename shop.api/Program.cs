@@ -17,7 +17,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ShopConnection"))
         .EnableSensitiveDataLogging().UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",

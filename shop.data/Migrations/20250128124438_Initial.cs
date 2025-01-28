@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace shop.data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -82,13 +82,12 @@ namespace shop.data.Migrations
                 columns: table => new
                 {
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SuppliersSupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductSupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MomentCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductSupplierJoins", x => new { x.ProductId, x.SuppliersSupplierId });
+                    table.PrimaryKey("PK_ProductSupplierJoins", x => new { x.ProductId, x.SupplierId });
                     table.ForeignKey(
                         name: "FK_ProductSupplierJoins_Products_ProductId",
                         column: x => x.ProductId,
@@ -96,8 +95,8 @@ namespace shop.data.Migrations
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductSupplierJoins_Suppliers_SuppliersSupplierId",
-                        column: x => x.SuppliersSupplierId,
+                        name: "FK_ProductSupplierJoins_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
                         principalTable: "Suppliers",
                         principalColumn: "SupplierId",
                         onDelete: ReferentialAction.Cascade);
@@ -109,11 +108,11 @@ namespace shop.data.Migrations
                 {
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOrderJoins", x => new { x.OrderId, x.ProductId });
+                    table.PrimaryKey("PK_ProductOrderJoins", x => new { x.ProductId, x.OrderId });
                     table.ForeignKey(
                         name: "FK_ProductOrderJoins_Orders_OrderId",
                         column: x => x.OrderId,
@@ -182,14 +181,14 @@ namespace shop.data.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductOrderJoins_ProductId",
+                name: "IX_ProductOrderJoins_OrderId",
                 table: "ProductOrderJoins",
-                column: "ProductId");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductSupplierJoins_SuppliersSupplierId",
+                name: "IX_ProductSupplierJoins_SupplierId",
                 table: "ProductSupplierJoins",
-                column: "SuppliersSupplierId");
+                column: "SupplierId");
         }
 
         /// <inheritdoc />
