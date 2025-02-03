@@ -13,6 +13,7 @@ namespace shop.data.DataConfig
                 new Customer {CustomerId = new Guid("95CDCF59-5D79-4FED-B5E5-771F9E7A2F30"), FirstName = "Mauro", LastName = "Lavista", Age = 32, BankDetails = "Absa: 475693"}
             };
             cBuilder.HasData(Customers);
+            cBuilder.HasOne(c => c.Cart).WithOne(c => c.Customer);
         }
     }
 }

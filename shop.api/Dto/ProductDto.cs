@@ -9,6 +9,7 @@
         public string PictureName { get; set; }
         public List<ProductSupplierJoinDto> ProductSupplierJoins { get; set; } = [];
         public List<OrderProductDto> OrderProducts { get; set; } = [];
+        public List<CartProductDto> CartProducts { get; set; } = [];
 
     }
 

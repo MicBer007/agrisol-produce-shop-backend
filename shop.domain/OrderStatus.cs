@@ -2,8 +2,9 @@
 {
     public enum OrderStatus
     {
-        InCart,
         Payed,
+        Cancelled,
+        InTransit,
         Delivered
     }
 }

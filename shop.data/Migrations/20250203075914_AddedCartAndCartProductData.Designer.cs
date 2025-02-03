@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using shop.data;
 
@@ -11,9 +12,11 @@ using shop.data;
 namespace shop.data.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20250203075914_AddedCartAndCartProductData")]
+    partial class AddedCartAndCartProductData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,11 +46,6 @@ namespace shop.data.Migrations
                         {
                             CartId = new Guid("abbf2d1a-2b6d-4186-82a3-d0ae39900333"),
                             CustomerId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d")
-                        },
-                        new
-                        {
-                            CartId = new Guid("82d5d779-dc12-49b9-8cfa-fb285a2cde7c"),
-                            CustomerId = new Guid("95cdcf59-5d79-4fed-b5e5-771f9e7a2f30")
                         });
                 });
 

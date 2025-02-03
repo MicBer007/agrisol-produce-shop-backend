@@ -16,6 +16,7 @@ namespace shop.api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ICustomerDomainService, CustomerDomainService>();
+            services.AddScoped<IProductDomainService, ProductDomainService>();
         }
     }
 

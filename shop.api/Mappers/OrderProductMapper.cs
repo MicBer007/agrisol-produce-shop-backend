@@ -8,17 +8,19 @@ namespace shop.api.Mappers
 
         public static OrderProductDto ToDto(OrderProduct OrderProduct)
         {
+            if (OrderProduct == null) return null;
             OrderProductDto dto = new()
             {
                 Quantity = OrderProduct.Quantity,
-                Product = ProductMapper.ToDtoFromType(OrderProduct.Product, OrderProduct.GetType()),
-                Order = OrderMapper.ToDtoFromType(OrderProduct.Order, OrderProduct.GetType())
+                Product = ProductMapper.ToDtoFromType(OrderProduct.Product, typeof(OrderProduct)),
+                Order = OrderMapper.ToDtoFromType(OrderProduct.Order, typeof(OrderProduct))
             };
             return dto;
         }
 
         public static OrderProductDto ToDtoFromType(OrderProduct OrderProduct, Type objectType)
         {
+            if (OrderProduct == null) return null;
             OrderProductDto dto = new()
             {
                 Quantity = OrderProduct.Quantity
@@ -30,6 +32,7 @@ namespace shop.api.Mappers
 
         public static OrderProduct ToDomain(OrderProductDto OrderProduct)
         {
+            if (OrderProduct == null) return null;
             OrderProduct model = new()
             {
                 ProductId = (Guid) OrderProduct.Product.ProductId,

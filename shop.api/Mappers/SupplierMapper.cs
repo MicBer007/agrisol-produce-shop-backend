@@ -8,6 +8,7 @@ namespace shop.api.Mappers
 
         public static SupplierDto ToDto(Supplier Supplier)
         {
+            if (Supplier == null) return null;
             SupplierDto dto = new()
             {
                 SupplierId = Supplier.SupplierId,
@@ -19,6 +20,7 @@ namespace shop.api.Mappers
 
         public static SupplierDto ToDtoFromType(Supplier Supplier, Type objectType)
         {
+            if (Supplier == null) return null;
             SupplierDto dto = new()
             {
                 SupplierId = Supplier.SupplierId,
@@ -30,6 +32,7 @@ namespace shop.api.Mappers
 
         public static Supplier ToDomain(SupplierDto Supplier)
         {
+            if (Supplier == null) return null;
             List<ProductSupplierJoin> productSupplierJoin = Supplier.ProductSupplierJoins.Select(ProductSupplierJoinMapper.ToDomain).ToList();
             Guid SupplierId = Supplier.SupplierId == null ? Guid.NewGuid() : (Guid)Supplier.SupplierId;
             Supplier model = new()

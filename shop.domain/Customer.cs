@@ -7,6 +7,7 @@
         public string LastName { get; set; }
         public int Age { get; set; }
         public string BankDetails { get; set; }
+        public Cart Cart { get; set; }
         public List<Order> Orders { get; set; } = [];
     }
 

@@ -7,6 +7,7 @@ namespace shop.api.Mappers
     {
         public static ProductSupplierJoinDto ToDto(ProductSupplierJoin Join)
         {
+            if (Join == null) return null;
             ProductSupplierJoinDto dto = new()
             {
                 MomentCreated = Join.MomentCreated,
@@ -18,6 +19,7 @@ namespace shop.api.Mappers
 
         public static ProductSupplierJoinDto ToDtoFromType(ProductSupplierJoin ProductSupplierJoin, Type objectType)
         {
+            if (ProductSupplierJoin == null) return null;
             ProductSupplierJoinDto dto = new()
             {
                 MomentCreated = ProductSupplierJoin.MomentCreated
@@ -29,6 +31,7 @@ namespace shop.api.Mappers
 
         public static ProductSupplierJoin ToDomain(ProductSupplierJoinDto dto)
         {
+            if (dto == null) return null;
             Product product = ProductMapper.ToDomain(dto.Product);
             Supplier supplier = SupplierMapper.ToDomain(dto.Supplier);
             ProductSupplierJoin model = new()

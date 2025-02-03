@@ -11,9 +11,9 @@ namespace shop.data.DomainServices
             return await DbSet.ToListAsync();
         }
 
-        public async Task<Customer> GetCustomerByIdAsync(Guid customerId)
+        public async Task<Customer> GetCustomerByIdAsync(Guid CustomerId)
         {
-            return await DbSet.FindAsync(customerId);
+            return await DbSet.FindAsync(CustomerId);
         }
 
         public async Task<Customer> GetCustomerByIdWithOrdersAsync(Guid CustomerId)
@@ -21,32 +21,37 @@ namespace shop.data.DomainServices
             return await DbSet.Include(c => c.Orders).ThenInclude(o => o.OrderProducts).ThenInclude(oP => oP.Product).Include(oP => oP.Orders).FirstOrDefaultAsync(c => c.CustomerId == CustomerId);
         }
 
-        public async Task<Customer> AddCustomerAsync(Customer customer)
+        public async Task<Customer> GetCustomerByIdWithCartAsync(Guid CustomerId)
         {
-            if (customer.Orders != null && customer.Orders.Count > 0) throw new ArgumentException("Orders should be empty when adding a new customer!");
-            DbSet.Add(customer);
-            await Db.SaveChangesAsync();
-            return customer;
+            return await DbSet.Include(c => c.Cart).ThenInclude(c => c.CartProducts).ThenInclude(cP => cP.Product).FirstOrDefaultAsync(c => c.CustomerId == CustomerId);
         }
 
-        public async Task<int> DeleteCustomerAsync(Guid customerId)
-        {
-            var customer = await DbSet.FindAsync(customerId);
-            if (customer != null) DbSet.Remove(customer);
-            return await Db.SaveChangesAsync();
-        }
+        //public async Task<Customer> AddCustomerAsync(Customer customer)
+        //{
+        //    if (customer.Orders != null && customer.Orders.Count > 0) throw new ArgumentException("Orders should be empty when adding a new customer!");
+        //    DbSet.Add(customer);
+        //    await Db.SaveChangesAsync();
+        //    return customer;
+        //}
 
-        public async Task<int> UpdateCustomerAsync(Customer customer)
-        {
-            if (customer.Orders != null && customer.Orders.Count > 0) throw new ArgumentException("Orders should be empty when updating a customer!");
-            DbSet.Update(customer);
-            return await Db.SaveChangesAsync();
-        }
+        //public async Task<int> DeleteCustomerAsync(Guid customerId)
+        //{
+        //    var customer = await DbSet.FindAsync(customerId);
+        //    if (customer != null) DbSet.Remove(customer);
+        //    return await Db.SaveChangesAsync();
+        //}
 
-        public async Task<IEnumerable<Customer>> GetCustomersWithAllData()
-        {
-            return await DbSet.Include(c => c.Orders).ThenInclude(o => o.OrderProducts).ThenInclude(oP => oP.Product).ThenInclude(p => p.ProductSupplierJoins).ThenInclude(pS => pS.Supplier).ToListAsync();
-        }
+        //public async Task<int> UpdateCustomerAsync(Customer customer)
+        //{
+        //    if (customer.Orders != null && customer.Orders.Count > 0) throw new ArgumentException("Orders should be empty when updating a customer!");
+        //    DbSet.Update(customer);
+        //    return await Db.SaveChangesAsync();
+        //}
+
+        //public async Task<IEnumerable<Customer>> GetCustomersWithAllData()
+        //{
+        //    return await DbSet.Include(c => c.Orders).ThenInclude(o => o.OrderProducts).ThenInclude(oP => oP.Product).ThenInclude(p => p.ProductSupplierJoins).ThenInclude(pS => pS.Supplier).ToListAsync();
+        //}
     }
 
     public interface ICustomerDomainService
@@ -54,10 +59,11 @@ namespace shop.data.DomainServices
         Task<IEnumerable<Customer>> GetCustomersAsync();
         Task<Customer> GetCustomerByIdAsync(Guid CustomerId);
         Task<Customer> GetCustomerByIdWithOrdersAsync(Guid CustomerId);
-        Task<IEnumerable<Customer>> GetCustomersWithAllData();
-        Task<Customer> AddCustomerAsync(Customer customer);
-        Task<int> DeleteCustomerAsync(Guid CustomerId);
-        Task<int> UpdateCustomerAsync(Customer customer);
+        Task<Customer> GetCustomerByIdWithCartAsync(Guid CustomerId);
+        //Task<IEnumerable<Customer>> GetCustomersWithAllData();
+        //Task<Customer> AddCustomerAsync(Customer customer);
+        //Task<int> DeleteCustomerAsync(Guid CustomerId);
+        //Task<int> UpdateCustomerAsync(Customer customer);
     }
 
 }

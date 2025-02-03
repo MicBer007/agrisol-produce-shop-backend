@@ -9,12 +9,13 @@ namespace shop.api.Mappers
 
         public static OrderDto ToDto(Order Order)
         {
+            if (Order == null) return null;
             OrderDto dto = new()
             {
                 OrderId = Order.OrderId,
                 CustomerId = Order.CustomerId,
                 OrderStatus = Order.OrderStatus.ToString(),
-                TimeCarted = Order.TimeCarted,
+                TimeCancelled = Order.TimeCancelled,
                 TimePayed = Order.TimePayed,
                 TimeDelivered = Order.TimeDelivered,
                 OrderProducts = Order.OrderProducts.Select(o => OrderProductMapper.ToDtoFromType(o, Order.GetType())).ToList()
@@ -24,12 +25,13 @@ namespace shop.api.Mappers
 
         public static OrderDto ToDtoFromType(Order Order, Type objectType)
         {
+            if (Order == null) return null;
             OrderDto dto = new()
             {
                 OrderId = Order.OrderId,
                 CustomerId = Order.CustomerId,
                 OrderStatus = Order.OrderStatus.ToString(),
-                TimeCarted = Order.TimeCarted,
+                TimeCancelled = Order.TimeCancelled,
                 TimePayed = Order.TimePayed,
                 TimeDelivered = Order.TimeDelivered
             };
@@ -39,13 +41,14 @@ namespace shop.api.Mappers
 
         public static Order ToDomain(OrderDto Order)
         {
+            if (Order == null) return null;
             List<OrderProduct> orderProducts = Order.OrderProducts.Select(OrderProductMapper.ToDomain).ToList();
             Guid OrderId = Order.OrderId == null ? Guid.NewGuid() : (Guid) Order.OrderId;
             Order model = new()
             {
                 OrderId = OrderId,
                 OrderStatus = (OrderStatus) Enum.Parse(typeof(OrderStatus), Order.OrderStatus),
-                TimeCarted = Order.TimeCarted,
+                TimeCancelled = Order.TimeCancelled,
                 TimePayed = Order.TimePayed,
                 TimeDelivered = Order.TimeDelivered,
                 OrderProducts = orderProducts

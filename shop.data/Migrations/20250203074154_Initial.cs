@@ -14,6 +14,17 @@ namespace shop.data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Carts",
+                columns: table => new
+                {
+                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carts", x => x.CartId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
@@ -60,11 +71,11 @@ namespace shop.data.Migrations
                 columns: table => new
                 {
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TimeCarted = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TimeCancelled = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TimePayed = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TimeDelivered = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TimeDelivered = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,6 +85,31 @@ namespace shop.data.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CartProducts",
+                columns: table => new
+                {
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartProducts", x => new { x.ProductId, x.CartId });
+                    table.ForeignKey(
+                        name: "FK_CartProducts_Carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Carts",
+                        principalColumn: "CartId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -166,14 +202,19 @@ namespace shop.data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "OrderId", "CustomerId", "OrderStatus", "TimeCarted", "TimeDelivered", "TimePayed" },
+                columns: new[] { "OrderId", "CustomerId", "OrderStatus", "TimeCancelled", "TimeDelivered", "TimePayed" },
                 values: new object[,]
                 {
-                    { new Guid("22ed9b30-1d3c-4b96-ab3a-56f40608f2be"), new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"), "InCart", new DateTime(2024, 11, 30, 23, 38, 55, 0, DateTimeKind.Unspecified), null, null },
+                    { new Guid("22ed9b30-1d3c-4b96-ab3a-56f40608f2be"), new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"), "Cancelled", new DateTime(2024, 11, 30, 23, 38, 55, 0, DateTimeKind.Unspecified), null, null },
                     { new Guid("46e4fa2d-96bc-4c80-8ece-1a20cd7402b4"), new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"), "Payed", new DateTime(2023, 5, 2, 23, 59, 23, 0, DateTimeKind.Unspecified), null, new DateTime(2024, 2, 28, 17, 42, 49, 0, DateTimeKind.Unspecified) },
-                    { new Guid("7213d1a4-0da4-4d88-82eb-379cf1f4b03c"), new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"), "InCart", new DateTime(2024, 4, 12, 5, 27, 19, 0, DateTimeKind.Unspecified), null, null },
+                    { new Guid("7213d1a4-0da4-4d88-82eb-379cf1f4b03c"), new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"), "InTransit", new DateTime(2024, 4, 12, 5, 27, 19, 0, DateTimeKind.Unspecified), null, null },
                     { new Guid("ed5287a9-7240-4485-9f5f-392cd52f6ea7"), new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"), "Delivered", new DateTime(2022, 6, 26, 19, 1, 34, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 25, 16, 48, 42, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 25, 21, 51, 25, 0, DateTimeKind.Unspecified) }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartProducts_CartId",
+                table: "CartProducts",
+                column: "CartId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
@@ -195,10 +236,16 @@ namespace shop.data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CartProducts");
+
+            migrationBuilder.DropTable(
                 name: "ProductOrderJoins");
 
             migrationBuilder.DropTable(
                 name: "ProductSupplierJoins");
+
+            migrationBuilder.DropTable(
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "Orders");

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using shop.data;
 
@@ -11,9 +12,11 @@ using shop.data;
 namespace shop.data.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20250203075029_LinkedCartAndCustomer")]
+    partial class LinkedCartAndCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,18 +40,6 @@ namespace shop.data.Migrations
                         .IsUnique();
 
                     b.ToTable("Carts");
-
-                    b.HasData(
-                        new
-                        {
-                            CartId = new Guid("abbf2d1a-2b6d-4186-82a3-d0ae39900333"),
-                            CustomerId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d")
-                        },
-                        new
-                        {
-                            CartId = new Guid("82d5d779-dc12-49b9-8cfa-fb285a2cde7c"),
-                            CustomerId = new Guid("95cdcf59-5d79-4fed-b5e5-771f9e7a2f30")
-                        });
                 });
 
             modelBuilder.Entity("shop.domain.CartProduct", b =>
@@ -67,32 +58,6 @@ namespace shop.data.Migrations
                     b.HasIndex("CartId");
 
                     b.ToTable("CartProducts");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = new Guid("4c004c7a-aa08-4714-9f2a-153dce79154d"),
-                            CartId = new Guid("abbf2d1a-2b6d-4186-82a3-d0ae39900333"),
-                            Quantity = 100
-                        },
-                        new
-                        {
-                            ProductId = new Guid("8bf98d1e-78a2-44a5-ba3d-7e0e40079384"),
-                            CartId = new Guid("abbf2d1a-2b6d-4186-82a3-d0ae39900333"),
-                            Quantity = 30
-                        },
-                        new
-                        {
-                            ProductId = new Guid("885f5a71-8458-4c41-b437-a2b07153bf5d"),
-                            CartId = new Guid("abbf2d1a-2b6d-4186-82a3-d0ae39900333"),
-                            Quantity = 40
-                        },
-                        new
-                        {
-                            ProductId = new Guid("571cffb5-45cf-4130-9fe8-db271cf7769e"),
-                            CartId = new Guid("abbf2d1a-2b6d-4186-82a3-d0ae39900333"),
-                            Quantity = 300
-                        });
                 });
 
             modelBuilder.Entity("shop.domain.Customer", b =>
