@@ -10,8 +10,6 @@ namespace shop.api.Controllers
     [ApiController]
     public class ProductController(IProductDomainService productService) : ControllerBase
     {
-
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {

@@ -41,24 +41,29 @@ namespace shop.api.Mappers
             return dto;
         }
 
-        public static Customer ToDomain(CustomerDto Customer)
+        public static Customer ToDomainWithCart(CustomerDto Customer, CartDto Cart)
         {
-            if (Customer == null) return null;
-            List<Order> Orders = Customer.Orders.Select(OrderMapper.ToDomain).ToList();
-            Cart Cart = CartMapper.ToDomain(Customer.Cart);
             Guid CustomerId = Customer.CustomerId == null ? Guid.NewGuid() : (Guid)Customer.CustomerId;
-            Guid CartId = Customer.Cart.CartId == null ? Guid.NewGuid() : (Guid)Customer.Cart.CartId;
-            Customer model = new()
+            Guid CartId = Cart.CartId == null ? Guid.NewGuid() : (Guid)Cart.CartId;
+
+            Customer CustomerModel = new()
             {
                 CustomerId = CustomerId,
-                Cart = Cart,
                 FirstName = Customer.FirstName,
                 LastName = Customer.LastName,
                 BankDetails = Customer.BankDetails,
                 Age = Customer.Age,
-                Orders = Orders
+                Orders = []
             };
-            return model;
+            Cart CartModel = new()
+            {
+                CustomerId = CustomerId,
+                CartId = CartId,
+                CartProducts = [],
+                Customer = CustomerModel
+            };
+            CustomerModel.Cart = CartModel;
+            return CustomerModel;
         }
 
     }

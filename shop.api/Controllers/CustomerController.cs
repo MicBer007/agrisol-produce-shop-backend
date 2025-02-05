@@ -40,31 +40,6 @@ namespace shop.api.Controllers
             return Ok(CustomerMapper.ToDto(customerWithOrders));
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<CustomerDto>> AddNewCustomer(CustomerDto customer)
-        //{
-        //    var addedCustomer = await customerService.AddCustomerAsync(CustomerMapper.ToDomain(customer));
-        //    return Ok(CustomerMapper.ToDto(addedCustomer));
-        //}
-
-        //[HttpDelete("{id}")]
-        //[ProducesResponseType(204)]
-        //public async Task<IActionResult> DeleteCustomer(Guid id)
-        //{
-        //    var rowsChanged = await customerService.DeleteCustomerAsync(id);
-        //    if (rowsChanged == 0) return BadRequest("Entry not found");
-        //    return NoContent();
-        //}
-
-        //[HttpPut]
-        //[ProducesResponseType(204)]
-        //public async Task<IActionResult> PutCustomer([FromBody] CustomerDto customerDto)
-        //{
-        //    int rowsChanged = await customerService.UpdateCustomerAsync(CustomerMapper.ToDomain(customerDto));
-        //    if (rowsChanged == 0) return BadRequest("Database error");
-        //    return NoContent();
-        //}
-
     }
 
 }

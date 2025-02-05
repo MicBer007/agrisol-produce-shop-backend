@@ -43,10 +43,6 @@ namespace shop.api.Mappers
 
         public static Product ToDomain(ProductDto Product)
         {
-            if (Product == null) return null;
-            List<ProductSupplierJoin> joins = Product.ProductSupplierJoins.Select(s => ProductSupplierJoinMapper.ToDomain(s)).ToList();
-            List<OrderProduct> orderProducts = Product.OrderProducts.Select(OrderProductMapper.ToDomain).ToList();
-            List<CartProduct> cartProducts = Product.CartProducts.Select(CartProductMapper.ToDomain).ToList();
             Guid ProductId = Product.ProductId == null ? Guid.NewGuid() : (Guid)Product.ProductId;
             Product model = new()
             {
@@ -55,9 +51,9 @@ namespace shop.api.Mappers
                 Price = Product.Price,
                 InStock = Product.InStock,
                 PictureName = Product.PictureName,
-                ProductSupplierJoins = joins,
-                OrderProducts = orderProducts,
-                CartProducts = cartProducts
+                ProductSupplierJoins = [],
+                OrderProducts = [],
+                CartProducts = []
             };
             return model;
         }

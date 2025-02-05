@@ -29,21 +29,5 @@ namespace shop.api.Mappers
             return dto;
         }
 
-        public static ProductSupplierJoin ToDomain(ProductSupplierJoinDto dto)
-        {
-            if (dto == null) return null;
-            Product product = ProductMapper.ToDomain(dto.Product);
-            Supplier supplier = SupplierMapper.ToDomain(dto.Supplier);
-            ProductSupplierJoin model = new()
-            {
-                Product = product,
-                ProductId = product.ProductId,
-                Supplier = supplier,
-                SupplierId = supplier.SupplierId,
-                MomentCreated = dto.MomentCreated
-            };
-            return model;
-        }
-
     }
 }

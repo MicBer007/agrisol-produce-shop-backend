@@ -32,14 +32,12 @@ namespace shop.api.Mappers
 
         public static Supplier ToDomain(SupplierDto Supplier)
         {
-            if (Supplier == null) return null;
-            List<ProductSupplierJoin> productSupplierJoin = Supplier.ProductSupplierJoins.Select(ProductSupplierJoinMapper.ToDomain).ToList();
             Guid SupplierId = Supplier.SupplierId == null ? Guid.NewGuid() : (Guid)Supplier.SupplierId;
             Supplier model = new()
             {
                 SupplierId = SupplierId,
                 SupplierName = Supplier.SupplierName,
-                ProductSupplierJoins = productSupplierJoin
+                ProductSupplierJoins = []
             };
             return model;
         }

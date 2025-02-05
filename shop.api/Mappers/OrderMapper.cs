@@ -41,8 +41,6 @@ namespace shop.api.Mappers
 
         public static Order ToDomain(OrderDto Order)
         {
-            if (Order == null) return null;
-            List<OrderProduct> orderProducts = Order.OrderProducts.Select(OrderProductMapper.ToDomain).ToList();
             Guid OrderId = Order.OrderId == null ? Guid.NewGuid() : (Guid) Order.OrderId;
             Order model = new()
             {
@@ -51,7 +49,7 @@ namespace shop.api.Mappers
                 TimeCancelled = Order.TimeCancelled,
                 TimePayed = Order.TimePayed,
                 TimeDelivered = Order.TimeDelivered,
-                OrderProducts = orderProducts
+                OrderProducts = []
             };
             return model;
         }

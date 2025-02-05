@@ -30,19 +30,5 @@ namespace shop.api.Mappers
             return dto;
         }
 
-        public static CartProduct ToDomain(CartProductDto CartProduct)
-        {
-            if (CartProduct == null) return null;
-            CartProduct model = new()
-            {
-                Quantity = CartProduct.Quantity,
-                CartId = (Guid) CartProduct.Cart.CartId,
-                Cart = CartMapper.ToDomain(CartProduct.Cart),
-                ProductId = (Guid) CartProduct.Product.ProductId,
-                Product = ProductMapper.ToDomain(CartProduct.Product)
-            };
-            return model;
-        }
-
     }
 }

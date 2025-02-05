@@ -12,6 +12,7 @@ namespace shop.api.Mappers
             if (Cart == null) return null;
             CartDto dto = new()
             {
+                CartId = Cart.CartId,
                 Customer = CustomerMapper.ToDtoFromType(Cart.Customer, typeof(Cart)),
                 CartProducts = Cart.CartProducts.Select(cP => CartProductMapper.ToDtoFromType(cP, typeof(Cart))).ToList()
             };
@@ -29,21 +30,6 @@ namespace shop.api.Mappers
             if (objectType != typeof(Customer)) dto.Customer = CustomerMapper.ToDtoFromType(Cart.Customer, typeof(Cart));
             if (objectType != typeof (CartProduct)) dto.CartProducts = Cart.CartProducts.Select(cP => CartProductMapper.ToDtoFromType(cP, typeof (Cart))).ToList();
             return dto;
-        }
-
-        public static Cart ToDomain(CartDto Cart)
-        {
-            if (Cart == null) return null;
-            List<CartProduct> cartProducts = Cart.CartProducts.Select(CartProductMapper.ToDomain).ToList();
-            Guid CartId = Cart.CartId == null ? Guid.NewGuid() : (Guid) Cart.CartId;
-            Cart model = new()
-            {
-                CartId = CartId,
-                CustomerId = (Guid)Cart.Customer.CustomerId,
-                Customer = CustomerMapper.ToDomain(Cart.Customer),
-                CartProducts = cartProducts
-            };
-            return model;
         }
 
     }

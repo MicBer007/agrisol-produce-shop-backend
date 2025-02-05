@@ -30,19 +30,5 @@ namespace shop.api.Mappers
             return dto;
         }
 
-        public static OrderProduct ToDomain(OrderProductDto OrderProduct)
-        {
-            if (OrderProduct == null) return null;
-            OrderProduct model = new()
-            {
-                ProductId = (Guid) OrderProduct.Product.ProductId,
-                Product = ProductMapper.ToDomain(OrderProduct.Product),
-                OrderId = (Guid) OrderProduct.Order.OrderId,
-                Order = OrderMapper.ToDomain(OrderProduct.Order),
-                Quantity = OrderProduct.Quantity
-            };
-            return model;
-        }
-
     }
 }

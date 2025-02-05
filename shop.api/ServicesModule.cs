@@ -17,6 +17,9 @@ namespace shop.api
         {
             services.AddScoped<ICustomerDomainService, CustomerDomainService>();
             services.AddScoped<IProductDomainService, ProductDomainService>();
+            services.AddScoped<IOrderDomainService, OrderDomainService>();
+            services.AddScoped<ICartDomainService, CartDomainService>();
+            services.AddScoped<ICartCheckoutService, CartCheckoutService>();
         }
     }
 
