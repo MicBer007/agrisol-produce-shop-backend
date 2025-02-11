@@ -11,11 +11,18 @@ namespace shop.api.Controllers
     public class OrderController(IOrderDomainService orderService) : ControllerBase
     {
 
-        [HttpGet("{customerId}")]
+        [HttpGet("Customer/{customerId}")]
         public async Task<ActionResult<OrderDto>> GetOrdersOfCustomer(Guid customerId)
         {
             var ordersOfCustomer = await orderService.GetOrdersOfCustomerAsync(customerId);
             return Ok(ordersOfCustomer.Select(OrderMapper.ToDto));
+        }
+
+        [HttpGet("{orderId}")]
+        public async Task<ActionResult<OrderDto>> GetOrderById(Guid orderId)
+        {
+            var order = await orderService.GetOrderByIdAsync(orderId);
+            return Ok(OrderMapper.ToDto(order));
         }
 
     }
